@@ -10,8 +10,11 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
+
 public class OCClient {
     public static void main(String[] args) {
+
     //post method
         try {
             //10.225.6.95
