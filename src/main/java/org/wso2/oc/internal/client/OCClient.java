@@ -10,8 +10,11 @@ import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.util.Date;
+
 public class OCClient {
     public static void main(String[] args) {
+
     //post method
         try {
             URL url = new URL("http://10.100.4.138:9763/OCServer/services/oc-server/internal/oc/servers/");
