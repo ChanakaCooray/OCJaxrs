@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataHolder {
+
 	private static Map<Integer, ServerData> serverStorage = new HashMap<Integer, ServerData>();
 	private static Map<Integer, ArrayList<String>> commands =
 			new HashMap<Integer, ArrayList<String>>();
@@ -17,13 +18,6 @@ public class DataHolder {
 		return serverStorage;
 	}
 
-	/**
-	 * @param serversData the serversData to set
-	 */
-	public static void setServersData(Map<Integer, ServerData> serversData) {
-		DataHolder.serverStorage = serversData;
-	}
-
 	public static int getServerCount() {
 		return serverCount;
 	}
@@ -33,13 +27,6 @@ public class DataHolder {
 	 */
 	public static int incrementServerCount() {
 		return serverCount++;
-	}
-
-	/**
-	 * @param serverCount the serverCount to set
-	 */
-	public static void setServerCount(int serverCount) {
-		DataHolder.serverCount = serverCount;
 	}
 
 	public static void addCommand(int serverId, int commandId) {
@@ -80,6 +67,7 @@ public class DataHolder {
 		temp.setSystemLoadAverage(data.getSystemLoadAverage());
 		temp.setTimestamp(data.getTimestamp());
 		temp.setTenants(data.getTenants());
+
 		serverStorage.put(serverId, temp);
 
 		String tempArray[];
@@ -88,6 +76,7 @@ public class DataHolder {
 			tempArray = commands.get(serverId).toArray(new String[commands.get(serverId).size()]);
 			commands.get(serverId).clear();
 		} else {
+
 			tempArray = new String[0];
 		}
 
