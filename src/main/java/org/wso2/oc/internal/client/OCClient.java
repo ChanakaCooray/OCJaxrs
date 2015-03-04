@@ -56,7 +56,7 @@ public class OCClient {
         }
         //put method
         try {
-            URL url = new URL("http://10.100.4.138:9763/OCServer/services/oc-server/internal/oc/servers/1");
+            URL url = new URL("http://10.100.4.138:9763/OCServer/services/oc-server/internal/oc/servers/1010041139455");
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setDoOutput(true);
             conn.setRequestMethod("PUT");
@@ -66,7 +66,7 @@ public class OCClient {
             os.write(input1.getBytes());
             os.flush();
 
-            if (conn.getResponseCode() != HttpURLConnection.HTTP_CREATED) {
+            if (conn.getResponseCode() != HttpURLConnection.HTTP_OK) {
                 throw new RuntimeException("Failed : HTTP error code : "
                         + conn.getResponseCode());
             }

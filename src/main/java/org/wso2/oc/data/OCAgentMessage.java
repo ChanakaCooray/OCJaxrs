@@ -1,8 +1,8 @@
 package org.wso2.oc.data;
 
-public class ServerData {
+public class OCAgentMessage {
 
-	private int serverId;
+	private String serverId;
 	private String ip;
 	private String serverName;
 	private String serverVersion;
@@ -26,6 +26,14 @@ public class ServerData {
 	private String[] tenants;
 	private String status;
 
+	public String getServerId() {
+		return serverId;
+	}
+
+	public void setServerId(String serverId) {
+		this.serverId = serverId;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -33,21 +41,6 @@ public class ServerData {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	/**
-	 * @return the serverId
-	 */
-	public int getServerId() {
-		return serverId;
-	}
-
-	/**
-	 * @param serverId the serverId to set
-	 */
-	public void setServerId(int serverId) {
-		this.serverId = serverId;
-	}
-
 	/**
 	 * @return the ip
 	 */

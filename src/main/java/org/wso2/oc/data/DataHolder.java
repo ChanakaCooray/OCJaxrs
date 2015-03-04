@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class DataHolder {
 
-	private static Map<Integer, ServerData> serverStorage = new HashMap<Integer, ServerData>();
+	private static Map<String, OCAgentMessage> serverStorage = new HashMap<String, OCAgentMessage>();
 	private static Map<Integer, ArrayList<String>> commands =
 			new HashMap<Integer, ArrayList<String>>();
 	private static int serverCount = 1;
@@ -14,7 +14,7 @@ public class DataHolder {
 	/**
 	 * @return the serversData
 	 */
-	public static Map<Integer, ServerData> getServersData() {
+	public static Map<String, OCAgentMessage> getServersData() {
 		return serverStorage;
 	}
 
@@ -55,8 +55,8 @@ public class DataHolder {
 		}
 	}
 
-	public static String[] updateServerData(int serverId, ServerData data) {
-		ServerData temp = serverStorage.get(serverId);
+	public static String[] updateServerData(String serverId, OCAgentMessage data) {
+		OCAgentMessage temp = serverStorage.get(serverId);
 		temp.setFreeMemory(data.getFreeMemory());
 		temp.setIdleCpuUsage(data.getIdleCpuUsage());
 		temp.setSystemCpuUsage(data.getSystemCpuUsage());
@@ -81,6 +81,14 @@ public class DataHolder {
 		}
 
 		return tempArray;
+	}
+	public static String registerServerData(OCAgentMessage OCAgentMessage){
+		String serverIp= OCAgentMessage.getAdminServiceUrl().substring(8,20);
+		String serverPort= OCAgentMessage.getAdminServiceUrl().substring(21,25);
+		String serverId=serverIp.replaceAll("[.]","")+serverPort;
+		OCAgentMessage.setServerId(serverId);
+		serverStorage.put(serverId, OCAgentMessage);
+		return serverId;
 	}
 
 }

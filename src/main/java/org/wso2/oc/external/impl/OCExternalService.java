@@ -2,7 +2,7 @@ package org.wso2.oc.external.impl;
 
 import org.wso2.oc.data.DataHolder;
 import org.wso2.oc.data.ServerConstants;
-import org.wso2.oc.data.ServerData;
+import org.wso2.oc.data.OCAgentMessage;
 import org.wso2.oc.external.OCExternal;
 
 import javax.ws.rs.core.Response;
@@ -19,9 +19,9 @@ public class OCExternalService implements OCExternal {
 
 	public Response getAllServersData() {
 
-		Map<Integer, ServerData> map = DataHolder.getServersData();
+		Map<String, OCAgentMessage> map = DataHolder.getServersData();
 
-		ServerData[] servers = map.values().toArray(new ServerData[map.values().size()]);
+		OCAgentMessage[] servers = map.values().toArray(new OCAgentMessage[map.values().size()]);
 
 		updateServersStatus(servers);
 
@@ -30,7 +30,7 @@ public class OCExternalService implements OCExternal {
 
 	public Response getServerData(int id) {
 
-		Map<Integer, ServerData> map = DataHolder.getServersData();
+		Map<String, OCAgentMessage> map = DataHolder.getServersData();
 
 		if (map.get(id) != null) {
 			updateServerStatus(map.get(id));
@@ -45,14 +45,14 @@ public class OCExternalService implements OCExternal {
 		return Response.ok().build();
 	}
 
-	public void updateServersStatus(ServerData[] servers){
+	public void updateServersStatus(OCAgentMessage[] servers){
 
-		for(ServerData server:servers){
+		for(OCAgentMessage server:servers){
 			updateServerStatus(server);
 		}
 	}
 
-	public void updateServerStatus(ServerData server){
+	public void updateServerStatus(OCAgentMessage server){
 		Date currentTime = new Date();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -77,7 +77,7 @@ public class OCExternalService implements OCExternal {
 	}
 
 	//	public void init() {
-	//		ServerData s = new ServerData("https://10.100.4.113:9455/", "Application Server", "5.2.1",
+	//		OCAgentMessage s = new OCAgentMessage("https://10.100.4.113:9455/", "Application Server", "5.2.1",
 	//		                              "wso2.as.domain", "worker", "https://10.100.4.113:9455/",
 	//		                              "1970-01-01 05:30:00", "wind", "12345", "4", "1234", "123.23",
 	//		                              new String[] { "patch0", "patch1" });
@@ -90,7 +90,7 @@ public class OCExternalService implements OCExternal {
 	//		s.setSystemLoadAverage("123");
 	//		s.setTenants(new String[] { "abc", "asd" });
 	//
-	//		ServerData s1 = new ServerData("https://10.100.4.113:9462/", "Application Server", "5.2.1",
+	//		OCAgentMessage s1 = new OCAgentMessage("https://10.100.4.113:9462/", "Application Server", "5.2.1",
 	//		                               "wso2.as.domain", "worker", "https://10.100.4.113:9462/",
 	//		                               "1970-01-01 05:30:00", "wind", "12345", "4", "1234",
 	//		                               "123.23", new String[] { "patch0", "patch1" });
