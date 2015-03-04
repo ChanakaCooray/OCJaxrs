@@ -24,10 +24,14 @@ public class DataHolder {
 		DataHolder.serverStorage = serversData;
 	}
 
+	public static int getServerCount() {
+		return serverCount;
+	}
+
 	/**
 	 * @return the serverCount
 	 */
-	public static int getServerCount() {
+	public static int incrementServerCount() {
 		return serverCount++;
 	}
 

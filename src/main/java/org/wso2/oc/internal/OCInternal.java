@@ -18,7 +18,7 @@ import java.util.Map;
 	@Consumes("application/json")
 	@Produces("application/json")
 	public Response registerServer(ServerData serverData) {
-		int id = DataHolder.getServerCount();
+		int id = DataHolder.incrementServerCount();
 		serverData.setServerId(id);
 		DataHolder.getServersData().put(id, serverData);
 		Map<String, Integer> response = new HashMap<String, Integer>();
