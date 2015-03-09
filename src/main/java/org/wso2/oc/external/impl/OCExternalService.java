@@ -11,100 +11,100 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Map;
 
-public class OCExternalService implements OCExternal {
-
-	public OCExternalService() {
-		//		init();
-	}
-
-	public Response getAllServersData() {
-
-		Map<String, OCAgentMessage> map = DataHolder.getServersData();
-
-		OCAgentMessage[] servers = map.values().toArray(new OCAgentMessage[map.values().size()]);
-
-		updateServersStatus(servers);
-
-		return Response.ok(servers).build();
-	}
-
-	public Response getServerData(int id) {
-
-		Map<String, OCAgentMessage> map = DataHolder.getServersData();
-
-		if (map.get(id) != null) {
-			updateServerStatus(map.get(id));
-			return Response.ok(map.get(id)).build();
-		}
-		else
-			return Response.ok().build();
-	}
-
-	public Response executeCommand(int serverId, int commandId) {
-		DataHolder.addCommand(serverId, commandId);
-		return Response.ok().build();
-	}
-
-	public void updateServersStatus(OCAgentMessage[] servers){
-
-		for(OCAgentMessage server:servers){
-			updateServerStatus(server);
-		}
-	}
-
-	public void updateServerStatus(OCAgentMessage server){
-		Date currentTime = new Date();
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
-
-		Date lastServerUpTime = null;
-
-		try {
-			lastServerUpTime = dateFormat.parse(server.getTimestamp());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		long diff = currentTime.getTime() - lastServerUpTime.getTime();
-
-		if(diff>60000){
-			server.setStatus(ServerConstants.SERVER_DOWN);
-		}else if(diff>20000){
-			server.setStatus(ServerConstants.SERVER_NOT_REPORTING);
-		}else{
-			server.setStatus(ServerConstants.SERVER_RUNNING);
-		}
-	}
-
-	//	public void init() {
-	//		OCAgentMessage s = new OCAgentMessage("https://10.100.4.113:9455/", "Application Server", "5.2.1",
-	//		                              "wso2.as.domain", "worker", "https://10.100.4.113:9455/",
-	//		                              "1970-01-01 05:30:00", "wind", "12345", "4", "1234", "123.23",
-	//		                              new String[] { "patch0", "patch1" });
-	//		s.setFreeMemory("123");
-	//		s.setIdleCpuUsage("51");
-	//		s.setSystemCpuUsage("11");
-	//		s.setUserCpuUsage("234");
-	//		s.setServerUpTime("123");
-	//		s.setThreadCount("24");
-	//		s.setSystemLoadAverage("123");
-	//		s.setTenants(new String[] { "abc", "asd" });
-	//
-	//		OCAgentMessage s1 = new OCAgentMessage("https://10.100.4.113:9462/", "Application Server", "5.2.1",
-	//		                               "wso2.as.domain", "worker", "https://10.100.4.113:9462/",
-	//		                               "1970-01-01 05:30:00", "wind", "12345", "4", "1234",
-	//		                               "123.23", new String[] { "patch0", "patch1" });
-	//		s1.setFreeMemory("123");
-	//		s1.setIdleCpuUsage("51");
-	//		s1.setSystemCpuUsage("11");
-	//		s1.setUserCpuUsage("234");
-	//		s1.setServerUpTime("123");
-	//		s1.setThreadCount("24");
-	//		s1.setSystemLoadAverage("123");
-	//		s1.setTenants(new String[] { "abc", "asd" });
-	//
-	//		DataHolder.getServersData().put(1, s1);
-	//		DataHolder.getServersData().put(2, s1);
-	//	}
+public class OCExternalService{
+//
+//	public OCExternalService() {
+//		//		init();
+//	}
+//
+//	public Response getAllServersData() {
+//
+//		//Map<String, OCAgentMessage> map = DataHolder.getServersData();
+//
+//		//OCAgentMessage[] servers = map.values().toArray(new OCAgentMessage[map.values().size()]);
+//
+//		updateServersStatus(servers);
+//
+//		return Response.ok(servers).build();
+//	}
+//
+//	public Response getServerData(int id) {
+//
+//		//Map<String, OCAgentMessage> map = DataHolder.getServersData();
+//
+//		if (map.get(id) != null) {
+//			updateServerStatus(map.get(id));
+//			return Response.ok(map.get(id)).build();
+//		}
+//		else
+//			return Response.ok().build();
+//	}
+//
+//	public Response executeCommand(int serverId, int commandId) {
+//		//DataHolder.addCommand(serverId, commandId);
+//		return Response.ok().build();
+//	}
+//
+//	public void updateServersStatus(OCAgentMessage[] servers){
+//
+//		for(OCAgentMessage server:servers){
+//			updateServerStatus(server);
+//		}
+//	}
+//
+//	public void updateServerStatus(OCAgentMessage server){
+//		Date currentTime = new Date();
+//
+//		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+//
+//		Date lastServerUpTime = null;
+//
+//		try {
+//			lastServerUpTime = dateFormat.parse(server.getTimestamp());
+//		} catch (ParseException e) {
+//			e.printStackTrace();
+//		}
+//
+//		long diff = currentTime.getTime() - lastServerUpTime.getTime();
+//
+//		if(diff>60000){
+//			server.setStatus(ServerConstants.SERVER_DOWN);
+//		}else if(diff>20000){
+//			server.setStatus(ServerConstants.SERVER_NOT_REPORTING);
+//		}else{
+//			server.setStatus(ServerConstants.SERVER_RUNNING);
+//		}
+//	}
+//
+//	//	public void init() {
+//	//		OCAgentMessage s = new OCAgentMessage("https://10.100.4.113:9455/", "Application Server", "5.2.1",
+//	//		                              "wso2.as.domain", "worker", "https://10.100.4.113:9455/",
+//	//		                              "1970-01-01 05:30:00", "wind", "12345", "4", "1234", "123.23",
+//	//		                              new String[] { "patch0", "patch1" });
+//	//		s.setFreeMemory("123");
+//	//		s.setIdleCpuUsage("51");
+//	//		s.setSystemCpuUsage("11");
+//	//		s.setUserCpuUsage("234");
+//	//		s.setServerUpTime("123");
+//	//		s.setThreadCount("24");
+//	//		s.setSystemLoadAverage("123");
+//	//		s.setTenants(new String[] { "abc", "asd" });
+//	//
+//	//		OCAgentMessage s1 = new OCAgentMessage("https://10.100.4.113:9462/", "Application Server", "5.2.1",
+//	//		                               "wso2.as.domain", "worker", "https://10.100.4.113:9462/",
+//	//		                               "1970-01-01 05:30:00", "wind", "12345", "4", "1234",
+//	//		                               "123.23", new String[] { "patch0", "patch1" });
+//	//		s1.setFreeMemory("123");
+//	//		s1.setIdleCpuUsage("51");
+//	//		s1.setSystemCpuUsage("11");
+//	//		s1.setUserCpuUsage("234");
+//	//		s1.setServerUpTime("123");
+//	//		s1.setThreadCount("24");
+//	//		s1.setSystemLoadAverage("123");
+//	//		s1.setTenants(new String[] { "abc", "asd" });
+//	//
+//	//		DataHolder.getServersData().put(1, s1);
+//	//		DataHolder.getServersData().put(2, s1);
+//	//	}
 
 }

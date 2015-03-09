@@ -1,36 +1,40 @@
 package org.wso2.oc.data;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class Node {
 
-    private String NodeId;
+    private String nodeId;
     private String ip;
     private String subDomain;
     private String adminServiceUrl;
     private String startTime;
     private String os;
-    private String totalMemory;
-    private String cpuCount;
-    private String cpuSpeed;
+    private double totalMemory;
+    private int cpuCount;
+    private double cpuSpeed;
     private String timestamp;
-    private String[] patches;
-    private String freeMemory;
-    private String idleCpuUsage;
-    private String systemCpuUsage;
-    private String userCpuUsage;
+    private List<String> patches;
+    private double freeMemory;
+    private double idleCpuUsage;
+    private double systemCpuUsage;
+    private double userCpuUsage;
     private String serverUpTime;
-    private String threadCount;
-    private String systemLoadAverage;
+    private int threadCount;
+    private double systemLoadAverage;
     private String status;
-    private ArrayList<Command> commands;
+    private List<Command> commands;
+    public Node(){
+        commands=new ArrayList<Command>();
+    }
 
     public String getNodeId() {
-        return NodeId;
+        return nodeId;
     }
 
     public void setNodeId(String nodeId) {
-        NodeId = nodeId;
+        this.nodeId = nodeId;
     }
 
     public String getIp() {
@@ -73,27 +77,27 @@ public class Node {
         this.os = os;
     }
 
-    public String getTotalMemory() {
+    public double getTotalMemory() {
         return totalMemory;
     }
 
-    public void setTotalMemory(String totalMemory) {
+    public void setTotalMemory(double totalMemory) {
         this.totalMemory = totalMemory;
     }
 
-    public String getCpuCount() {
+    public int getCpuCount() {
         return cpuCount;
     }
 
-    public void setCpuCount(String cpuCount) {
+    public void setCpuCount(int cpuCount) {
         this.cpuCount = cpuCount;
     }
 
-    public String getCpuSpeed() {
+    public double getCpuSpeed() {
         return cpuSpeed;
     }
 
-    public void setCpuSpeed(String cpuSpeed) {
+    public void setCpuSpeed(double cpuSpeed) {
         this.cpuSpeed = cpuSpeed;
     }
 
@@ -105,43 +109,43 @@ public class Node {
         this.timestamp = timestamp;
     }
 
-    public String[] getPatches() {
+    public List<String> getPatches() {
         return patches;
     }
 
-    public void setPatches(String[] patches) {
+    public void setPatches(List<String> patches) {
         this.patches = patches;
     }
 
-    public String getFreeMemory() {
+    public double getFreeMemory() {
         return freeMemory;
     }
 
-    public void setFreeMemory(String freeMemory) {
+    public void setFreeMemory(double freeMemory) {
         this.freeMemory = freeMemory;
     }
 
-    public String getIdleCpuUsage() {
+    public double getIdleCpuUsage() {
         return idleCpuUsage;
     }
 
-    public void setIdleCpuUsage(String idleCpuUsage) {
+    public void setIdleCpuUsage(double idleCpuUsage) {
         this.idleCpuUsage = idleCpuUsage;
     }
 
-    public String getSystemCpuUsage() {
+    public double getSystemCpuUsage() {
         return systemCpuUsage;
     }
 
-    public void setSystemCpuUsage(String systemCpuUsage) {
+    public void setSystemCpuUsage(double systemCpuUsage) {
         this.systemCpuUsage = systemCpuUsage;
     }
 
-    public String getUserCpuUsage() {
+    public double getUserCpuUsage() {
         return userCpuUsage;
     }
 
-    public void setUserCpuUsage(String userCpuUsage) {
+    public void setUserCpuUsage(double userCpuUsage) {
         this.userCpuUsage = userCpuUsage;
     }
 
@@ -153,19 +157,19 @@ public class Node {
         this.serverUpTime = serverUpTime;
     }
 
-    public String getThreadCount() {
+    public int getThreadCount() {
         return threadCount;
     }
 
-    public void setThreadCount(String threadCount) {
+    public void setThreadCount(int threadCount) {
         this.threadCount = threadCount;
     }
 
-    public String getSystemLoadAverage() {
+    public double getSystemLoadAverage() {
         return systemLoadAverage;
     }
 
-    public void setSystemLoadAverage(String systemLoadAverage) {
+    public void setSystemLoadAverage(double systemLoadAverage) {
         this.systemLoadAverage = systemLoadAverage;
     }
 
@@ -177,11 +181,11 @@ public class Node {
         this.status = status;
     }
 
-    public ArrayList<Command> getCommands() {
+    public List<Command> getCommands() {
         return commands;
     }
 
-    public void setCommands(ArrayList<Command> commands) {
+    public void setCommands(List<Command> commands) {
         this.commands = commands;
     }
 }

@@ -5,90 +5,22 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class DataHolder {
-
-	private static Map<String, OCAgentMessage> serverStorage = new HashMap<String, OCAgentMessage>();
-	private static Map<Integer, ArrayList<String>> commands =
-			new HashMap<Integer, ArrayList<String>>();
-	private static int serverCount = 1;
-
-	/**
-	 * @return the serversData
-	 */
-	public static Map<String, OCAgentMessage> getServersData() {
-		return serverStorage;
+  private static Map<String,Cluster> clusters=new HashMap<String, Cluster>();
+	
+	public static Map<String, Cluster> getClusters() {
+		return clusters;
 	}
+	public static void addNodeCommand(String clusterId,String serverId,Command command){
 
-	public static int getServerCount() {
-		return serverCount;
 	}
+	public static void addClusterCommand(String clusterId,Command command){
 
-	/**
-	 * @return the serverCount
-	 */
-	public static int incrementServerCount() {
-		return serverCount++;
 	}
-
-	public static void addCommand(int serverId, int commandId) {
-
-		ArrayList<String> serverCommands;
-
-		if (commands.get(serverId) == null) {
-			serverCommands = new ArrayList<String>();
-			commands.put(serverId, serverCommands);
-		} else
-			serverCommands = commands.get(serverId);
-
-		switch (commandId) {
-			case 1:
-				serverCommands.add(ServerConstants.FORCE_RESTART);
-				break;
-			case 2:
-				serverCommands.add(ServerConstants.FORCE_SHUTDOWN);
-				break;
-			case 3:
-				serverCommands.add(ServerConstants.GRACEFUL_RESTART);
-				break;
-			case 4:
-				serverCommands.add(ServerConstants.GRACEFUL_SHUTDOWN);
-				break;
-		}
+	public static void addCluster(Cluster cluster){
+		clusters.put(cluster.getClusterId(),cluster);
 	}
-
-	public static String[] updateServerData(String serverId, OCAgentMessage data) {
-		OCAgentMessage temp = serverStorage.get(serverId);
-		temp.setFreeMemory(data.getFreeMemory());
-		temp.setIdleCpuUsage(data.getIdleCpuUsage());
-		temp.setSystemCpuUsage(data.getSystemCpuUsage());
-		temp.setUserCpuUsage(data.getUserCpuUsage());
-		temp.setAdminServiceUrl(data.getServerUpTime());
-		temp.setServerUpTime(data.getServerUpTime());
-		temp.setThreadCount(data.getThreadCount());
-		temp.setSystemLoadAverage(data.getSystemLoadAverage());
-		temp.setTimestamp(data.getTimestamp());
-		temp.setTenants(data.getTenants());
-
-		serverStorage.put(serverId, temp);
-
-		String tempArray[];
-
-		if (commands.get(serverId) != null) {
-			tempArray = commands.get(serverId).toArray(new String[commands.get(serverId).size()]);
-			commands.get(serverId).clear();
-		} else {
-
-			tempArray = new String[0];
-		}
-
-		return tempArray;
-	}
-	public static String registerServerData(OCAgentMessage OCAgentMessage){
-		String serverIp= OCAgentMessage.getAdminServiceUrl().substring(8,20);
-		String serverPort= OCAgentMessage.getAdminServiceUrl().substring(21,25);
-		String serverId=serverIp.replaceAll("[.]","")+serverPort;
-		OCAgentMessage.setServerId(serverId);
-		serverStorage.put(serverId, OCAgentMessage);
-		return serverId;
+	public static void addNode(String clusterId,Node node){
+       clusters.get(clusterId).addNewNode(node.getNodeId(),node);
 	}
 
 }

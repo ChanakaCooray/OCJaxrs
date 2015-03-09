@@ -1,5 +1,7 @@
 package org.wso2.oc.data;
 
+import java.util.List;
+
 public class OCAgentMessage {
 
 	private String serverId;
@@ -11,19 +13,19 @@ public class OCAgentMessage {
 	private String adminServiceUrl;
 	private String startTime;
 	private String os;
-	private String totalMemory;
-	private String cpuCount;
-	private String cpuSpeed;
+	private double totalMemory;
+	private int cpuCount;
+	private double cpuSpeed;
 	private String timestamp;
-	private String[] patches;
-	private String freeMemory;
-	private String idleCpuUsage;
-	private String systemCpuUsage;
-	private String userCpuUsage;
+	private List<String> patches;
+	private double freeMemory;
+	private double idleCpuUsage;
+	private double systemCpuUsage;
+	private double userCpuUsage;
 	private String serverUpTime;
-	private String threadCount;
-	private String systemLoadAverage;
-	private String[] tenants;
+	private int threadCount;
+	private double systemLoadAverage;
+	private List<String> tenants;
 	private String status;
 
 	public String getServerId() {
@@ -34,6 +36,174 @@ public class OCAgentMessage {
 		this.serverId = serverId;
 	}
 
+	public String getIp() {
+		return ip;
+	}
+
+	public void setIp(String ip) {
+		this.ip = ip;
+	}
+
+	public String getServerName() {
+		return serverName;
+	}
+
+	public void setServerName(String serverName) {
+		this.serverName = serverName;
+	}
+
+	public String getServerVersion() {
+		return serverVersion;
+	}
+
+	public void setServerVersion(String serverVersion) {
+		this.serverVersion = serverVersion;
+	}
+
+	public String getDomain() {
+		return domain;
+	}
+
+	public void setDomain(String domain) {
+		this.domain = domain;
+	}
+
+	public String getSubDomain() {
+		return subDomain;
+	}
+
+	public void setSubDomain(String subDomain) {
+		this.subDomain = subDomain;
+	}
+
+	public String getAdminServiceUrl() {
+		return adminServiceUrl;
+	}
+
+	public void setAdminServiceUrl(String adminServiceUrl) {
+		this.adminServiceUrl = adminServiceUrl;
+	}
+
+	public String getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(String startTime) {
+		this.startTime = startTime;
+	}
+
+	public String getOs() {
+		return os;
+	}
+
+	public void setOs(String os) {
+		this.os = os;
+	}
+
+	public double getTotalMemory() {
+		return totalMemory;
+	}
+
+	public void setTotalMemory(double totalMemory) {
+		this.totalMemory = totalMemory;
+	}
+
+	public int getCpuCount() {
+		return cpuCount;
+	}
+
+	public void setCpuCount(int cpuCount) {
+		this.cpuCount = cpuCount;
+	}
+
+	public double getCpuSpeed() {
+		return cpuSpeed;
+	}
+
+	public void setCpuSpeed(double cpuSpeed) {
+		this.cpuSpeed = cpuSpeed;
+	}
+
+	public String getTimestamp() {
+		return timestamp;
+	}
+
+	public void setTimestamp(String timestamp) {
+		this.timestamp = timestamp;
+	}
+
+	public List<String> getPatches() {
+		return patches;
+	}
+
+	public void setPatches(List<String> patches) {
+		this.patches = patches;
+	}
+
+	public double getFreeMemory() {
+		return freeMemory;
+	}
+
+	public void setFreeMemory(double freeMemory) {
+		this.freeMemory = freeMemory;
+	}
+
+	public double getIdleCpuUsage() {
+		return idleCpuUsage;
+	}
+
+	public void setIdleCpuUsage(double idleCpuUsage) {
+		this.idleCpuUsage = idleCpuUsage;
+	}
+
+	public double getSystemCpuUsage() {
+		return systemCpuUsage;
+	}
+
+	public void setSystemCpuUsage(double systemCpuUsage) {
+		this.systemCpuUsage = systemCpuUsage;
+	}
+
+	public double getUserCpuUsage() {
+		return userCpuUsage;
+	}
+
+	public void setUserCpuUsage(double userCpuUsage) {
+		this.userCpuUsage = userCpuUsage;
+	}
+
+	public String getServerUpTime() {
+		return serverUpTime;
+	}
+
+	public void setServerUpTime(String serverUpTime) {
+		this.serverUpTime = serverUpTime;
+	}
+
+	public int getThreadCount() {
+		return threadCount;
+	}
+
+	public void setThreadCount(int threadCount) {
+		this.threadCount = threadCount;
+	}
+
+	public double getSystemLoadAverage() {
+		return systemLoadAverage;
+	}
+
+	public void setSystemLoadAverage(double systemLoadAverage) {
+		this.systemLoadAverage = systemLoadAverage;
+	}
+
+	public List<String> getTenants() {
+		return tenants;
+	}
+
+	public void setTenants(List<String> tenants) {
+		this.tenants = tenants;
+	}
+
 	public String getStatus() {
 		return status;
 	}
@@ -41,301 +211,8 @@ public class OCAgentMessage {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-	/**
-	 * @return the ip
-	 */
-	public String getIp() {
-		return ip;
-	}
 
-	/**
-	 * @param ip the ip to set
-	 */
-	public void setIp(String ip) {
-		this.ip = ip;
-	}
-
-	/**
-	 * @return the serverName
-	 */
-	public String getServerName() {
-		return serverName;
-	}
-
-	/**
-	 * @param serverName the serverName to set
-	 */
-	public void setServerName(String serverName) {
-		this.serverName = serverName;
-	}
-
-	/**
-	 * @return the serverVersion
-	 */
-	public String getServerVersion() {
-		return serverVersion;
-	}
-
-	/**
-	 * @param serverVersion the serverVersion to set
-	 */
-	public void setServerVersion(String serverVersion) {
-		this.serverVersion = serverVersion;
-	}
-
-	/**
-	 * @return the domain
-	 */
-	public String getDomain() {
-		return domain;
-	}
-
-	/**
-	 * @param domain the domain to set
-	 */
-	public void setDomain(String domain) {
-		this.domain = domain;
-	}
-
-	/**
-	 * @return the subDomain
-	 */
-	public String getSubDomain() {
-		return subDomain;
-	}
-
-	/**
-	 * @param subDomain the subDomain to set
-	 */
-	public void setSubDomain(String subDomain) {
-		this.subDomain = subDomain;
-	}
-
-	/**
-	 * @return the adminServiceUrl
-	 */
-	public String getAdminServiceUrl() {
-		return adminServiceUrl;
-	}
-
-	/**
-	 * @param adminServiceUrl the adminServiceUrl to set
-	 */
-	public void setAdminServiceUrl(String adminServiceUrl) {
-		this.adminServiceUrl = adminServiceUrl;
-	}
-
-	/**
-	 * @return the startTime
-	 */
-	public String getStartTime() {
-		return startTime;
-	}
-
-	/**
-	 * @param startTime the startTime to set
-	 */
-	public void setStartTime(String startTime) {
-		this.startTime = startTime;
-	}
-
-	/**
-	 * @return the os
-	 */
-	public String getOs() {
-		return os;
-	}
-
-	/**
-	 * @param os the os to set
-	 */
-	public void setOs(String os) {
-		this.os = os;
-	}
-
-	/**
-	 * @return the totalMemory
-	 */
-	public String getTotalMemory() {
-		return totalMemory;
-	}
-
-	/**
-	 * @param totalMemory the totalMemory to set
-	 */
-	public void setTotalMemory(String totalMemory) {
-		this.totalMemory = totalMemory;
-	}
-
-	/**
-	 * @return the cpuCount
-	 */
-	public String getCpuCount() {
-		return cpuCount;
-	}
-
-	/**
-	 * @param cpuCount the cpuCount to set
-	 */
-	public void setCpuCount(String cpuCount) {
-		this.cpuCount = cpuCount;
-	}
-
-	/**
-	 * @return the cpuSpeed
-	 */
-	public String getCpuSpeed() {
-		return cpuSpeed;
-	}
-
-	/**
-	 * @param cpuSpeed the cpuSpeed to set
-	 */
-	public void setCpuSpeed(String cpuSpeed) {
-		this.cpuSpeed = cpuSpeed;
-	}
-
-	/**
-	 * @return the timestamp
-	 */
-	public String getTimestamp() {
-		return timestamp;
-	}
-
-	/**
-	 * @param timestamp the timestamp to set
-	 */
-	public void setTimestamp(String timestamp) {
-		this.timestamp = timestamp;
-	}
-
-	/**
-	 * @return the patches
-	 */
-	public String[] getPatches() {
-		return patches;
-	}
-
-	/**
-	 * @param patches the patches to set
-	 */
-	public void setPatches(String[] patches) {
-		this.patches = patches;
-	}
-
-	/**
-	 * @return the freeMemory
-	 */
-	public String getFreeMemory() {
-		return freeMemory;
-	}
-
-	/**
-	 * @param freeMemory the freeMemory to set
-	 */
-	public void setFreeMemory(String freeMemory) {
-		this.freeMemory = freeMemory;
-	}
-
-	/**
-	 * @return the idleCpuUsage
-	 */
-	public String getIdleCpuUsage() {
-		return idleCpuUsage;
-	}
-
-	/**
-	 * @param idleCpuUsage the idleCpuUsage to set
-	 */
-	public void setIdleCpuUsage(String idleCpuUsage) {
-		this.idleCpuUsage = idleCpuUsage;
-	}
-
-	/**
-	 * @return the systemCpuUsage
-	 */
-	public String getSystemCpuUsage() {
-		return systemCpuUsage;
-	}
-
-	/**
-	 * @param systemCpuUsage the systemCpuUsage to set
-	 */
-	public void setSystemCpuUsage(String systemCpuUsage) {
-		this.systemCpuUsage = systemCpuUsage;
-	}
-
-	/**
-	 * @return the userCpuUsage
-	 */
-	public String getUserCpuUsage() {
-		return userCpuUsage;
-	}
-
-	/**
-	 * @param userCpuUsage the userCpuUsage to set
-	 */
-	public void setUserCpuUsage(String userCpuUsage) {
-		this.userCpuUsage = userCpuUsage;
-	}
-
-	/**
-	 * @return the serverUpTime
-	 */
-	public String getServerUpTime() {
-		return serverUpTime;
-	}
-
-	/**
-	 * @param serverUpTime the serverUpTime to set
-	 */
-	public void setServerUpTime(String serverUpTime) {
-		this.serverUpTime = serverUpTime;
-	}
-
-	/**
-	 * @return the threadCount
-	 */
-	public String getThreadCount() {
-		return threadCount;
-	}
-
-	/**
-	 * @param threadCount the threadCount to set
-	 */
-	public void setThreadCount(String threadCount) {
-		this.threadCount = threadCount;
-	}
-
-	/**
-	 * @return the systemLoadAverage
-	 */
-	public String getSystemLoadAverage() {
-		return systemLoadAverage;
-	}
-
-	/**
-	 * @param systemLoadAverage the systemLoadAverage to set
-	 */
-	public void setSystemLoadAverage(String systemLoadAverage) {
-		this.systemLoadAverage = systemLoadAverage;
-	}
-
-	/**
-	 * @return the tenants
-	 */
-	public String[] getTenants() {
-		return tenants;
-	}
-
-	/**
-	 * @param tenants the tenants to set
-	 */
-	public void setTenants(String[] tenants) {
-		this.tenants = tenants;
-	}
-
-//	public String printData(String[] data) {
+	//	public String printData(String[] data) {
 //		String details = "";
 //		for (String temp : data) {
 //			details += "--" + temp;
