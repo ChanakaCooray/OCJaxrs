@@ -1,7 +1,7 @@
 package org.wso2.oc.internal.impl;
 
-
 import javax.ws.rs.core.Response;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.wso2.oc.data.Cluster;
@@ -9,15 +9,12 @@ import org.wso2.oc.data.DataHolder;
 import org.wso2.oc.data.Node;
 import org.wso2.oc.data.OCAgentMessage;
 import org.wso2.oc.internal.OCInternal;
+
 import java.util.HashMap;
 import java.util.Map;
 
-
-
-public class OCInternalService implements OCInternal{
-
-	private static final Log log=LogFactory.getLog(OCInternalService.class);
-
+public class OCInternalService implements OCInternal {
+	private static final Log log = LogFactory.getLog(OCInternalService.class);
 	public Response registerServer(OCAgentMessage ocAgentMessage){
 		String serverID= registerCluster(ocAgentMessage);
 		Map<String,String> response=new HashMap<String,String>();
@@ -29,7 +26,7 @@ public class OCInternalService implements OCInternal{
 			return Response.status(200).entity(response).build();
 	}
 
-	private static String[] updateCluster(String nodeId, OCAgentMessage ocAgentMessage) {
+	private String[] updateCluster(String nodeId, OCAgentMessage ocAgentMessage) {
 		Cluster cluster=DataHolder.getClusters().get(ocAgentMessage.getDomain());
 		Node node=cluster.getNodes().get(nodeId);
 		node.setFreeMemory(ocAgentMessage.getFreeMemory());
@@ -48,7 +45,6 @@ public class OCInternalService implements OCInternal{
 
 			tempArray = new String[0];
 		}
-
 		return tempArray;
 	}
 	   private String registerCluster(OCAgentMessage ocAgentMessage){
@@ -82,6 +78,6 @@ public class OCInternalService implements OCInternal{
 		   DataHolder.addNode(tempCluster.getClusterId(),node);
 		   return serverId;
 
-	}
 
+	}
 }

@@ -15,5 +15,6 @@ public interface OCInternal {
     @PUT
     @Path("/{server_id}")
     public Response synchronizeServer(@PathParam("server_id") String serverId,OCAgentMessage ocAgentMessage);
+
 }
 

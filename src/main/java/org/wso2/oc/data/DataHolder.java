@@ -6,7 +6,7 @@ import java.util.Map;
 
 public class DataHolder {
   private static Map<String,Cluster> clusters=new HashMap<String, Cluster>();
-	
+
 	public static Map<String, Cluster> getClusters() {
 		return clusters;
 	}
