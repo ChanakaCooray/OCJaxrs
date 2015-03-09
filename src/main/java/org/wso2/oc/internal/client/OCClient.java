@@ -61,7 +61,7 @@ public class OCClient {
             conn.setDoOutput(true);
             conn.setRequestMethod("PUT");
             conn.setRequestProperty("Content-Type", "application/json");
-            String input1="{\"freeMemory\":\"2031.464448\",\"idleCpuUsage\":\"51.67310777925644\",\"systemCpuUsage\":\"11.751442341969984\",\"userCpuUsage\":\"36.57544357970618\",\"adminServiceUrl\":\"https://10.100.4.113:9455/\",\"serverUpTime\":\"0d 0h 1m 8s\",\"threadCount\":\"62\",\"systemLoadAverage\":\"3.58\",\"timestamp\":\"1424252819302\"}";
+            String input1="{\"domain\":\"wso2.as.domain\",\"freeMemory\":\"2031.464448\",\"idleCpuUsage\":\"51.67310777925644\",\"systemCpuUsage\":\"11.751442341969984\",\"userCpuUsage\":\"36.57544357970618\",\"adminServiceUrl\":\"https://10.100.4.113:9455/\",\"serverUpTime\":\"0d 0h 1m 8s\",\"threadCount\":\"62\",\"systemLoadAverage\":\"3.58\",\"timestamp\":\"1424252819302\"}";
             OutputStream os = conn.getOutputStream();
             os.write(input1.getBytes());
             os.flush();

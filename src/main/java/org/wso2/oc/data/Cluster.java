@@ -1,19 +1,27 @@
 package org.wso2.oc.data;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Cluster {
     private Map<String,Node> nodes;
-    private String serverName;
-    private String serverVersion;
+    private String clusterId;
+    private String clusterName;
+    private String clusterVersion;
     private String domain;
-    private String[] tenants;
+    private List<String> tenants;
     private String status;
-    private ArrayList<Command> commands;
-
-
+    private List<Command> commands;
+    private static final Log log= LogFactory.getLog(Cluster.class);
+    public Cluster(){
+        nodes=new HashMap<String,Node>();
+        commands=new ArrayList<Command>();
+    }
     public int getNumberOfNodes(){
         int numberOfNodes=0;
         return numberOfNodes;
@@ -22,28 +30,37 @@ public class Cluster {
         int numberOfActiveNodes=0;
         return numberOfActiveNodes;
     }
-    public Map<String, Node> getNodes() {
-        return nodes;
+
+    public Map<String,Node> getNodes() {
+        return this.nodes;
     }
 
-    public void setNodes(Map<String, Node> nodes) {
-        this.nodes = nodes;
+    public void addNewNode(String nodeId,Node node) {
+        this.nodes.put(nodeId,node);
     }
 
-    public String getServerName() {
-        return serverName;
+    public String getClusterId() {
+        return clusterId;
     }
 
-    public void setServerName(String serverName) {
-        this.serverName = serverName;
+    public void setClusterId(String clusterId) {
+        this.clusterId = clusterId;
     }
 
-    public String getServerVersion() {
-        return serverVersion;
+    public String getClusterName() {
+        return clusterName;
     }
 
-    public void setServerVersion(String serverVersion) {
-        this.serverVersion = serverVersion;
+    public void setClusterName(String clusterName) {
+        this.clusterName = clusterName;
+    }
+
+    public String getClusterVersion() {
+        return clusterVersion;
+    }
+
+    public void setClusterVersion(String clusterVersion) {
+        this.clusterVersion = clusterVersion;
     }
 
     public String getDomain() {
@@ -54,11 +71,11 @@ public class Cluster {
         this.domain = domain;
     }
 
-    public String[] getTenants() {
+    public List<String> getTenants() {
         return tenants;
     }
 
-    public void setTenants(String[] tenants) {
+    public void setTenants(List<String> tenants) {
         this.tenants = tenants;
     }
 
@@ -70,12 +87,11 @@ public class Cluster {
         this.status = status;
     }
 
-    public ArrayList<Command> getCommands() {
+    public List<Command> getCommands() {
         return commands;
     }
 
-    public void setCommands(ArrayList<Command> commands) {
+    public void setCommands(List<Command> commands) {
         this.commands = commands;
     }
-
 }
