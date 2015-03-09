@@ -3,7 +3,7 @@ package org.wso2.oc.data;
 import java.util.Date;
 
 public class Tenant {
-    private int tenantId;
+    private int id;
     private String domain;
     private String adminName;
     private String adminFullName;
@@ -13,12 +13,12 @@ public class Tenant {
     private boolean active;
     private Date createdDate;
 
-    public int getTenantId() {
-        return tenantId;
+    public int getId() {
+        return id;
     }
 
-    public void setTenantId(int tenantId) {
-        this.tenantId = tenantId;
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getDomain() {

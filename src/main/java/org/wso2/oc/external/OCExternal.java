@@ -23,23 +23,23 @@ public interface OCExternal {
 	@GET
 	@Path("/{cluster-Id}/nodes/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Map<String, Node> getAllNodesData(@PathParam("cluster-Id") String clusterId);
+	public Map<String, Node> getAllClusterNodesData(@PathParam("cluster-Id") String clusterId);
 
 	@GET
 	@Path("/{cluster-Id}/nodes/{node-Id}/")
 	@Produces(MediaType.APPLICATION_JSON)
-	public Node getNodeData(@PathParam("cluster-Id") String clusterId,
-	                        @PathParam("node-Id") String nodeId);
+	public Node getClusterNodeData(@PathParam("cluster-Id") String clusterId,
+	                               @PathParam("node-Id") String nodeId);
 
 	@PUT
 	@Path("/{cluster-Id}/commands/{command-Id}/")
-	public Response executeClusterCommand(@PathParam("cluster-Id") int clusterId,
-	                                      @PathParam("command-Id") int commandId);
+	public Response executeClusterCommand(@PathParam("cluster-Id") String clusterId,
+	                                      @PathParam("command-Id") String commandId);
 
 	@PUT
 	@Path("/{cluster-Id}/nodes/{node-Id}/commands/{command-Id}/")
-	public Response executeNodeCommand(@PathParam("cluster-Id") int clusterId,
+	public Response executeNodeCommand(@PathParam("cluster-Id") String clusterId,
 	                                   @PathParam("node-Id") String nodeId,
-	                                   @PathParam("command-Id") int commandId);
+	                                   @PathParam("command-Id") String commandId);
 
 }
