@@ -109,7 +109,7 @@ public class OCInternalService implements OCInternal {
 				clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
 				clusterCommand.setPreviousNode(null);
 
-			} else if(clusterCommand.getNextNode().equals(currentNode) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
+			} else if(clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
 				currentNode.getCommands().clear();
 				currentNode.addCommand(currentCommand.getCommandName());
 				clusterCommand.getExecutedNodes().put(nodeId, true);
@@ -132,7 +132,7 @@ public class OCInternalService implements OCInternal {
 					clusterCommand.setExecutedNodes(null);
 				}
 
-			}else if(clusterCommand.getPreviousNode().equals(currentNode)){
+			}else if(clusterCommand.getPreviousNode().getNodeId().equals(currentNode.getNodeId())){
 				clusterCommand.setPreviousNodeUp(true);
 			}
 
