@@ -23,8 +23,7 @@ public class Cluster {
         commands=new ArrayList<Command>();
     }
     public int getNumberOfNodes(){
-        int numberOfNodes=0;
-        return numberOfNodes;
+        return nodes.size();
     }
     public int getNumberOfActiveNodes(){
         int numberOfActiveNodes=0;

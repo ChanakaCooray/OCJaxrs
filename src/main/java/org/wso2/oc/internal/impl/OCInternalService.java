@@ -30,12 +30,12 @@ public class OCInternalService implements OCInternal {
 		Cluster cluster=DataHolder.getClusters().get(ocAgentMessage.getDomain());
 		Node node=cluster.getNodes().get(nodeId);
 		node.setFreeMemory(ocAgentMessage.getFreeMemory());
-	   node.setIdleCpuUsage(ocAgentMessage.getIdleCpuUsage());
-	   node.setSystemCpuUsage(ocAgentMessage.getSystemCpuUsage());
-	   node.setUserCpuUsage(ocAgentMessage.getUserCpuUsage());
-	   node.setServerUpTime(ocAgentMessage.getServerUpTime());
-	   node.setThreadCount(ocAgentMessage.getThreadCount());
-	   node.setSystemLoadAverage(ocAgentMessage.getSystemLoadAverage());
+	    node.setIdleCpuUsage(ocAgentMessage.getIdleCpuUsage());
+	    node.setSystemCpuUsage(ocAgentMessage.getSystemCpuUsage());
+	    node.setUserCpuUsage(ocAgentMessage.getUserCpuUsage());
+	    node.setServerUpTime(ocAgentMessage.getServerUpTime());
+	    node.setThreadCount(ocAgentMessage.getThreadCount());
+	    node.setSystemLoadAverage(ocAgentMessage.getSystemLoadAverage());
 		DataHolder.addNode(cluster.getClusterId(),node);
 		String tempArray[];
 		if (node.getCommands() != null) {
@@ -80,4 +80,14 @@ public class OCInternalService implements OCInternal {
 
 
 	}
+	private void executeCommandsOnNodes(Cluster cluster){
+		if(cluster.getCommands().size()>0){
+			String command=cluster.getCommands().get(0).getCommandName();
+			Map<String,Node>  nodeList=cluster.getNodes();
+			for(Map.Entry<String,Node> entry:nodeList.entrySet()){
+
+			}
+		}
+	}
+
 }
