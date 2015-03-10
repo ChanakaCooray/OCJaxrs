@@ -93,7 +93,9 @@ public class OCInternalService implements OCInternal {
 			Command currentCommand=cluster.getCommands().get(0);
 			OCExternalService externalService=new OCExternalService();
 			externalService.updateClusterStatus(cluster);
-            Node currentNode=cluster.getNodes().get(nodeId);
+
+			Node currentNode=cluster.getNodes().get(nodeId);
+
 			ClusterCommand clusterCommand= cluster.getCommands().get(0);
 			if(clusterCommand.getExecutedNodes().size()==0){
 				Map<String,Node> nodeList=cluster.getNodes();
@@ -107,7 +109,7 @@ public class OCInternalService implements OCInternal {
 				clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
 				clusterCommand.setPreviousNode(null);
 
-			}else if(clusterCommand.getNextNode().equals(currentNode) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
+			} else if(clusterCommand.getNextNode().equals(currentNode) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
 				currentNode.getCommands().clear();
 				currentNode.addCommand(currentCommand.getCommandName());
 				clusterCommand.getExecutedNodes().put(nodeId, true);
@@ -115,6 +117,7 @@ public class OCInternalService implements OCInternal {
 				iterator = clusterCommand.getExecutedNodes().entrySet().iterator();
 				while (iterator.hasNext()) {
 					 Map.Entry<String,Boolean> tempEntry= iterator.next();
+
 					if(tempEntry.getValue()!=true){
 						temp.put(tempEntry.getKey(), tempEntry.getValue());
 					}

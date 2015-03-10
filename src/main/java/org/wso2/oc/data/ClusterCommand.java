@@ -1,5 +1,7 @@
 package org.wso2.oc.data;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 import java.util.HashMap;
 import java.util.Map;
 
