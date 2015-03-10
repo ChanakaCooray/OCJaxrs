@@ -96,9 +96,9 @@ public class OCExternalService implements OCExternal {
 
 		long diff = currentTime.getTime() - lastServerUpTime.getTime();
 
-		if(diff>60000){
+		if(diff>ServerConstants.NODE_DOWN_TIME_INTERVAL){
 			node.setStatus(ServerConstants.NODE_DOWN);
-		}else if(diff>20000){
+		}else if(diff>ServerConstants.NODE_NOT_REPORTING_TIME_INTERVAL){
 			node.setStatus(ServerConstants.NODE_NOT_REPORTING);
 		}else{
 			node.setStatus(ServerConstants.NODE_RUNNING);
