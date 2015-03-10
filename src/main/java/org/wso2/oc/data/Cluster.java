@@ -17,12 +17,12 @@ public class Cluster {
     private String domain;
     private List<Tenant> tenants;
     private String status;
-    private List<Command> commands;
+    private List<ClusterCommand> commands;
     private static final Log log= LogFactory.getLog(Cluster.class);
 
     public Cluster(){
         nodes=new HashMap<String,Node>();
-        commands=new ArrayList<Command>();
+        commands=new ArrayList<ClusterCommand>();
     }
 
     public int getNumberOfNodes(){
@@ -96,14 +96,14 @@ public class Cluster {
         this.status = status;
     }
 
-    public List<Command> getCommands() {
+    public List<ClusterCommand> getCommands() {
         return commands;
     }
 
 	public void addCommand(String commandId){
 		if(commands == null)
-			commands = new ArrayList<Command>();
+			commands = new ArrayList<ClusterCommand>();
 
-		commands.add(new Command(commandId));
+		commands.add(new ClusterCommand(commandId));
 	}
 }
