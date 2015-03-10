@@ -185,7 +185,10 @@ public class Node {
         return commands;
     }
 
-    public void setCommands(List<Command> commands) {
-        this.commands = commands;
-    }
+	public void addCommand(String commandId){
+		if(commands == null)
+			commands = new ArrayList<Command>();
+
+		commands.add(new Command(commandId));
+	}
 }

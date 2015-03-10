@@ -25,7 +25,7 @@ public class OCAgentMessage {
 	private String serverUpTime;
 	private int threadCount;
 	private double systemLoadAverage;
-	private List<String> tenants;
+	private List<Tenant> tenants;
 	private String status;
 
 	public String getServerId() {
@@ -196,11 +196,11 @@ public class OCAgentMessage {
 		this.systemLoadAverage = systemLoadAverage;
 	}
 
-	public List<String> getTenants() {
+	public List<Tenant> getTenants() {
 		return tenants;
 	}
 
-	public void setTenants(List<String> tenants) {
+	public void setTenants(List<Tenant> tenants) {
 		this.tenants = tenants;
 	}
 
@@ -211,25 +211,5 @@ public class OCAgentMessage {
 	public void setStatus(String status) {
 		this.status = status;
 	}
-
-	//	public String printData(String[] data) {
-//		String details = "";
-//		for (String temp : data) {
-//			details += "--" + temp;
-//		}
-//		return details;
-//	}
-//
-//	public String print() {
-//		;
-//		String data =
-//				this.ip + " : " + this.serverName + " :" + this.serverVersion + ":" + this.domain +
-//				":" + this.subDomain + ":" + this.adminServiceUrl + ":" + this.startTime + ":" +
-//				this.os + ":" + this.totalMemory + ":" + this.cpuCount + ":" + this.cpuSpeed + ":" +
-//				this.timestamp + ":" + this.idleCpuUsage + ":" + this.systemCpuUsage + ":" +
-//				this.userCpuUsage + ":" + this.serverUpTime + ":" + this.threadCount + ":" +
-//				this.systemLoadAverage + ":" + this.printData(this.patches);
-//		return data;
-//	}
 
 }

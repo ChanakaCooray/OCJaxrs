@@ -3,7 +3,11 @@ package org.wso2.oc.data;
 public class Command {
     private String commandName;
 
-    public String getCommandName() {
+	public Command(String commandName) {
+		this.commandName = commandName;
+	}
+
+	public String getCommandName() {
         return commandName;
     }
 

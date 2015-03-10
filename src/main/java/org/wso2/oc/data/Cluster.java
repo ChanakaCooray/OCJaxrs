@@ -9,24 +9,34 @@ import java.util.List;
 import java.util.Map;
 
 public class Cluster {
+
     private Map<String,Node> nodes;
     private String clusterId;
     private String clusterName;
     private String clusterVersion;
     private String domain;
-    private List<String> tenants;
+    private List<Tenant> tenants;
     private String status;
     private List<Command> commands;
     private static final Log log= LogFactory.getLog(Cluster.class);
+
     public Cluster(){
         nodes=new HashMap<String,Node>();
         commands=new ArrayList<Command>();
     }
+
     public int getNumberOfNodes(){
         return nodes.size();
     }
+
     public int getNumberOfActiveNodes(){
         int numberOfActiveNodes=0;
+
+	    for(Node n:nodes.values()){
+		    if(n.getStatus()==ServerConstants.NODE_RUNNING)
+			    numberOfActiveNodes++;
+	    }
+
         return numberOfActiveNodes;
     }
 
@@ -70,11 +80,11 @@ public class Cluster {
         this.domain = domain;
     }
 
-    public List<String> getTenants() {
+    public List<Tenant> getTenants() {
         return tenants;
     }
 
-    public void setTenants(List<String> tenants) {
+    public void setTenants(List<Tenant> tenants) {
         this.tenants = tenants;
     }
 
@@ -90,7 +100,10 @@ public class Cluster {
         return commands;
     }
 
-    public void setCommands(List<Command> commands) {
-        this.commands = commands;
-    }
+	public void addCommand(String commandId){
+		if(commands == null)
+			commands = new ArrayList<Command>();
+
+		commands.add(new Command(commandId));
+	}
 }

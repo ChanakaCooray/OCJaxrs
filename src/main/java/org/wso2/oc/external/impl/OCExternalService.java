@@ -3,9 +3,7 @@ package org.wso2.oc.external.impl;
 import org.wso2.oc.data.*;
 import org.wso2.oc.external.OCExternal;
 
-import javax.jws.WebService;
 import javax.ws.rs.core.Response;
-import javax.xml.crypto.Data;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -14,37 +12,76 @@ import java.util.Map;
 public class OCExternalService implements OCExternal {
 
 	public Map<String, Cluster> getAllClustersData() {
-		return null;
+
+		Map<String,Cluster> clusters = DataHolder.getClusters();
+
+		for(Cluster cluster:clusters.values()){
+			updateClusterStatus(cluster);
+		}
+
+		return clusters;
 	}
 
 	public Cluster getClusterData(String clusterId) {
-		return null;
+
+		Cluster cluster = DataHolder.getClusters().get(clusterId);
+
+		updateClusterStatus(cluster);
+
+		return cluster;
 	}
 
-	public Map<String, Node> getAllNodesData(String clusterId) {
-		return null;
-	}
+	public Map<String, Node> getAllClusterNodesData(String clusterId) {
 
-	public Node getNodeData(String clusterId, String nodeId) {
-		return null;
-	}
+		Map<String, Node> nodes = DataHolder.getClusters().get(clusterId).getNodes();
 
-	public Response executeClusterCommand(int clusterId, int commandId) {
-		return null;
-	}
-
-	public Response executeNodeCommand(int clusterId, String nodeId, int commandId) {
-		return null;
-	}
-
-	public void updateServersStatus(OCAgentMessage[] servers){
-
-		for(OCAgentMessage server:servers){
-			updateServerStatus(server);
+		for(Node node:nodes.values()){
+			updateNodeStatus(node);
 		}
+
+		return nodes;
 	}
 
-	public void updateServerStatus(OCAgentMessage server){
+	public Node getClusterNodeData(String clusterId, String nodeId) {
+
+		Node node = DataHolder.getClusters().get(clusterId).getNodes().get(nodeId);
+
+		updateNodeStatus(node);
+
+		return node;
+	}
+
+	public Response executeClusterCommand(String clusterId, String commandId) {
+		DataHolder.getClusters().get(clusterId).addCommand(commandId);
+		return Response.ok().build();
+	}
+
+	public Response executeNodeCommand(String clusterId, String nodeId, String commandId) {
+		DataHolder.getClusters().get(clusterId).getNodes().get(nodeId).addCommand(commandId);
+		return Response.ok().build();
+	}
+
+	public void updateClusterStatus(Cluster cluster){
+
+		Node[] nodes = cluster.getNodes().values().toArray(new Node[cluster.getNodes().size()]);
+
+		boolean allNodesDown = false;
+
+		for(Node node:nodes){
+			updateNodeStatus(node);
+
+			if(node.getStatus().equals(ServerConstants.NODE_DOWN))
+				allNodesDown = true;
+		}
+
+		if(allNodesDown){
+			cluster.setStatus(ServerConstants.CLUSTER_DOWN);
+		}
+		else
+			cluster.setStatus(ServerConstants.CLUSTER_RUNNING);
+	}
+
+	public void updateNodeStatus(Node node){
 		Date currentTime = new Date();
 
 		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -52,20 +89,19 @@ public class OCExternalService implements OCExternal {
 		Date lastServerUpTime = null;
 
 		try {
-			lastServerUpTime = dateFormat.parse(server.getTimestamp());
+			lastServerUpTime = dateFormat.parse(node.getTimestamp());
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 
 		long diff = currentTime.getTime() - lastServerUpTime.getTime();
 
-		if(diff>60000){
-			server.setStatus(ServerConstants.SERVER_DOWN);
-		}else if(diff>20000){
-			server.setStatus(ServerConstants.SERVER_NOT_REPORTING);
+		if(diff>ServerConstants.NODE_DOWN_TIME_INTERVAL){
+			node.setStatus(ServerConstants.NODE_DOWN);
+		}else if(diff>ServerConstants.NODE_NOT_REPORTING_TIME_INTERVAL){
+			node.setStatus(ServerConstants.NODE_NOT_REPORTING);
 		}else{
-			server.setStatus(ServerConstants.SERVER_RUNNING);
+			node.setStatus(ServerConstants.NODE_RUNNING);
 		}
 	}
-
 }
