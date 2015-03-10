@@ -8,10 +8,7 @@ import org.wso2.oc.data.*;
 import org.wso2.oc.external.impl.OCExternalService;
 import org.wso2.oc.internal.OCInternal;
 
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class OCInternalService implements OCInternal {
 	private static final Log log = LogFactory.getLog(OCInternalService.class);
@@ -43,8 +40,12 @@ public class OCInternalService implements OCInternal {
 		DataHolder.addNode(cluster.getClusterId(), node);
 		executeCommandsOnNodes(nodeId,cluster);
 		String tempArray[];
+		List<String> commandNames=new ArrayList<String>();
 		if (node.getCommands() != null) {
-			tempArray = node.getCommands().toArray(new String[node.getCommands().size()]);
+			for(Command command:node.getCommands()){
+				commandNames.add(command.getCommandName());
+			}
+			tempArray =commandNames.toArray(new String[commandNames.size()]);
 			node.getCommands().clear();
 		} else {
 
@@ -106,7 +107,7 @@ public class OCInternalService implements OCInternal {
 				ClusterCommand.previousNode=ClusterCommand.nextNode;
 			}else if(ClusterCommand.previousNode.equals(currentNode)){
 				ClusterCommand.isPreviousNodeUp=true;
-			}else if(ClusterCommand.nextNode.equals(currentNode) && ClusterCommand.isPreviousNodeUp==true ){
+			}else if(ClusterCommand.nextNode.equals(currentNode) && ClusterCommand.isPreviousNodeUp){
 				currentNode.getCommands().clear();
 				currentNode.addCommand(currentCommand.getCommandName());
 				ClusterCommand.executedNodes.put(nodeId,true);
