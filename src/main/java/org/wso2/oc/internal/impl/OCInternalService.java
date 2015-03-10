@@ -57,6 +57,7 @@ public class OCInternalService implements OCInternal {
 	private String registerCluster(OCAgentMessage ocAgentMessage) {
 
 		Cluster tempCluster = DataHolder.getClusters().get(ocAgentMessage.getDomain());
+
 		if (tempCluster == null) {
 			Cluster cluster = new Cluster();
 			cluster.setClusterId(ocAgentMessage.getDomain());
@@ -67,6 +68,7 @@ public class OCInternalService implements OCInternal {
 			DataHolder.addCluster(cluster);
 			tempCluster = cluster;
 		}
+
 		String serverIp = ocAgentMessage.getAdminServiceUrl().substring(8, 20);
 		String serverPort = ocAgentMessage.getAdminServiceUrl().substring(21, 25);
 		String serverId = serverIp.replaceAll("[.]", "") + serverPort;
@@ -85,9 +87,9 @@ public class OCInternalService implements OCInternal {
 		node.setPatches(ocAgentMessage.getPatches());
 		DataHolder.addNode(tempCluster.getClusterId(), node);
 		return serverId;
-
 	}
-	private void executeCommandsOnNodes(String nodeId,Cluster cluster){
+
+	private synchronized void executeCommandsOnNodes(String nodeId,Cluster cluster){
 		Iterator<Map.Entry<String,Boolean>> iterator;
 		if(cluster.getCommands().size()>0){
 			Command currentCommand=cluster.getCommands().get(0);
@@ -109,7 +111,7 @@ public class OCInternalService implements OCInternal {
 				clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
 				clusterCommand.setPreviousNode(null);
 
-			} else if(clusterCommand.getNextNode().equals(currentNode) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
+			} else if(clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
 				currentNode.getCommands().clear();
 				currentNode.addCommand(currentCommand.getCommandName());
 				clusterCommand.getExecutedNodes().put(nodeId, true);
@@ -129,10 +131,10 @@ public class OCInternalService implements OCInternal {
 					clusterCommand.setPreviousNodeUp(false);
 					clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
 				}else if(temp.size()==0){
-					clusterCommand.setExecutedNodes(null);
+					cluster.getCommands().clear();
 				}
 
-			}else if(clusterCommand.getPreviousNode().equals(currentNode)){
+			}else if(clusterCommand.getPreviousNode().getNodeId().equals(currentNode.getNodeId())){
 				clusterCommand.setPreviousNodeUp(true);
 			}
 
