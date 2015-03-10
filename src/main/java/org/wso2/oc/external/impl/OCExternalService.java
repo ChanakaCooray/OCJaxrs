@@ -77,6 +77,8 @@ public class OCExternalService implements OCExternal {
 		if(allNodesDown){
 			cluster.setStatus(ServerConstants.CLUSTER_DOWN);
 		}
+		else
+			cluster.setStatus(ServerConstants.CLUSTER_RUNNING);
 	}
 
 	public void updateNodeStatus(Node node){

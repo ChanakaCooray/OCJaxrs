@@ -38,6 +38,9 @@ public class OCInternalService implements OCInternal {
 		node.setServerUpTime(ocAgentMessage.getServerUpTime());
 		node.setThreadCount(ocAgentMessage.getThreadCount());
 		node.setSystemLoadAverage(ocAgentMessage.getSystemLoadAverage());
+		node.setTimestamp(ocAgentMessage.getTimestamp());
+		cluster.setTenants(ocAgentMessage.getTenants());
+
 		DataHolder.addNode(cluster.getClusterId(), node);
 		String tempArray[];
 		if (node.getCommands() != null) {
