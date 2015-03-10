@@ -130,6 +130,7 @@ public class OCInternalService implements OCInternal {
 					clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
 				}else if(temp.size()==0){
 					clusterCommand.setExecutedNodes(null);
+					cluster.getCommands().clear();
 				}
 
 			}else if(clusterCommand.getPreviousNode().getNodeId().equals(currentNode.getNodeId())){
