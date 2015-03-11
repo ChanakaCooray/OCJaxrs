@@ -16,7 +16,7 @@ public class OCExternalService implements OCExternal {
 		Map<String,Cluster> clusters = DataHolder.getClusters();
 
 		for(Cluster cluster:clusters.values()){
-			updateClusterStatus(cluster);
+			cluster.updateClusterStatus();
 		}
 
 		return clusters;
@@ -25,8 +25,8 @@ public class OCExternalService implements OCExternal {
 	public Cluster getClusterData(String clusterId) {
 
 		Cluster cluster = DataHolder.getClusters().get(clusterId);
+		cluster.updateClusterStatus();
 
-		updateClusterStatus(cluster);
 
 		return cluster;
 	}
@@ -36,7 +36,7 @@ public class OCExternalService implements OCExternal {
 		Map<String, Node> nodes = DataHolder.getClusters().get(clusterId).getNodes();
 
 		for(Node node:nodes.values()){
-			updateNodeStatus(node);
+			node.updateNodeStatus();
 		}
 
 		return nodes;
@@ -46,7 +46,7 @@ public class OCExternalService implements OCExternal {
 
 		Node node = DataHolder.getClusters().get(clusterId).getNodes().get(nodeId);
 
-		updateNodeStatus(node);
+		node.updateNodeStatus();
 
 		return node;
 	}
@@ -61,47 +61,4 @@ public class OCExternalService implements OCExternal {
 		return Response.ok().build();
 	}
 
-	public void updateClusterStatus(Cluster cluster){
-
-		Node[] nodes = cluster.getNodes().values().toArray(new Node[cluster.getNodes().size()]);
-
-		boolean allNodesDown = false;
-
-		for(Node node:nodes){
-			updateNodeStatus(node);
-
-			if(node.getStatus().equals(ServerConstants.NODE_DOWN))
-				allNodesDown = true;
-		}
-
-		if(allNodesDown){
-			cluster.setStatus(ServerConstants.CLUSTER_DOWN);
-		}
-		else
-			cluster.setStatus(ServerConstants.CLUSTER_RUNNING);
-	}
-
-	public void updateNodeStatus(Node node){
-		Date currentTime = new Date();
-
-		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
-
-		Date lastServerUpTime = null;
-
-		try {
-			lastServerUpTime = dateFormat.parse(node.getTimestamp());
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-
-		long diff = currentTime.getTime() - lastServerUpTime.getTime();
-
-		if(diff>ServerConstants.NODE_DOWN_TIME_INTERVAL){
-			node.setStatus(ServerConstants.NODE_DOWN);
-		}else if(diff>ServerConstants.NODE_NOT_REPORTING_TIME_INTERVAL){
-			node.setStatus(ServerConstants.NODE_NOT_REPORTING);
-		}else{
-			node.setStatus(ServerConstants.NODE_RUNNING);
-		}
-	}
 }

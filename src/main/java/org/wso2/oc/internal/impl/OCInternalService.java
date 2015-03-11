@@ -38,14 +38,14 @@ public class OCInternalService implements OCInternal {
 		node.setTimestamp(ocAgentMessage.getTimestamp());
 		cluster.setTenants(ocAgentMessage.getTenants());
 		DataHolder.addNode(cluster.getClusterId(), node);
-		executeCommandsOnNodes(nodeId,cluster);
+		executeCommandsOnNodes(nodeId, cluster);
 		String tempArray[];
-		List<String> commandNames=new ArrayList<String>();
+		List<String> commandNames = new ArrayList<String>();
 		if (node.getCommands() != null) {
-			for(Command command:node.getCommands()){
+			for (Command command : node.getCommands()) {
 				commandNames.add(command.getCommandName());
 			}
-			tempArray =commandNames.toArray(new String[commandNames.size()]);
+			tempArray = commandNames.toArray(new String[commandNames.size()]);
 			node.getCommands().clear();
 		} else {
 
@@ -69,6 +69,7 @@ public class OCInternalService implements OCInternal {
 		}
 		String serverIp = ocAgentMessage.getAdminServiceUrl().substring(8, 20);
 		String serverPort = ocAgentMessage.getAdminServiceUrl().substring(21, 25);
+		//String temp[]=ocAgentMessage.getAdminServiceUrl().split("\\");
 		String serverId = serverIp.replaceAll("[.]", "") + serverPort;
 		ocAgentMessage.setServerId(serverId);
 		Node node = new Node();
@@ -87,56 +88,61 @@ public class OCInternalService implements OCInternal {
 		return serverId;
 
 	}
-	private void executeCommandsOnNodes(String nodeId,Cluster cluster){
-		Iterator<Map.Entry<String,Boolean>> iterator;
-		if(cluster.getCommands().size()>0){
-			Command currentCommand=cluster.getCommands().get(0);
-			OCExternalService externalService=new OCExternalService();
-			externalService.updateClusterStatus(cluster);
 
-			Node currentNode=cluster.getNodes().get(nodeId);
-
-			ClusterCommand clusterCommand= cluster.getCommands().get(0);
-			if(clusterCommand.getExecutedNodes().size()==0){
-				Map<String,Node> nodeList=cluster.getNodes();
-				for(Node temp:nodeList.values()){
-					if(temp.getStatus().equals(ServerConstants.NODE_RUNNING)){
+	private void executeCommandsOnNodes(String nodeId, Cluster cluster) {
+		Iterator<Map.Entry<String, Boolean>> iterator;
+		if (cluster.getCommands().size() > 0) {
+			Command currentCommand = cluster.getCommands().get(0);
+			cluster.updateClusterStatus();
+			Node currentNode = cluster.getNodes().get(nodeId);
+			ClusterCommand clusterCommand = cluster.getCommands().get(0);
+			if (clusterCommand.getExecutedNodes().size() == 0) {
+				Map<String, Node> nodeList = cluster.getNodes();
+				for (Node temp : nodeList.values()) {
+					if (temp.getStatus().equals(ServerConstants.NODE_RUNNING)) {
 						clusterCommand.getExecutedNodes().put(temp.getNodeId(), false);
 					}
 				}
-				iterator=clusterCommand.getExecutedNodes().entrySet().iterator();
-				String nextNodeId=iterator.next().getKey();
-				clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
-				clusterCommand.setPreviousNode(null);
-
-			} else if(clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
-				currentNode.getCommands().clear();
-				currentNode.addCommand(currentCommand.getCommandName());
-				clusterCommand.getExecutedNodes().put(nodeId, true);
-				Map<String,Boolean> temp=new HashMap<String, Boolean>();
-				iterator = clusterCommand.getExecutedNodes().entrySet().iterator();
-				while (iterator.hasNext()) {
-					 Map.Entry<String,Boolean> tempEntry= iterator.next();
-
-					if(tempEntry.getValue()!=true){
-						temp.put(tempEntry.getKey(), tempEntry.getValue());
-					}
-				}
-				if(temp.size()>0){
-					iterator=temp.entrySet().iterator();
-					String nextNodeId=iterator.next().getKey();
-					clusterCommand.setPreviousNode(clusterCommand.getNextNode());
-					clusterCommand.setPreviousNodeUp(false);
+				if (cluster.getNumberOfActiveNodes() > 0) {
+					iterator = clusterCommand.getExecutedNodes().entrySet().iterator();
+					String nextNodeId = iterator.next().getKey();
 					clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
-				}else if(temp.size()==0){
-					clusterCommand.setExecutedNodes(null);
+					clusterCommand.setPreviousNode(null);
+
+				} else {
 					cluster.getCommands().clear();
 				}
 
-			}else if(clusterCommand.getPreviousNode().getNodeId().equals(currentNode.getNodeId())){
+			} else if (clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) &&
+			           (clusterCommand.isPreviousNodeUp() ||
+			            clusterCommand.getPreviousNode() == null)) {
+				currentNode.getCommands().clear();
+				currentNode.addCommand(currentCommand.getCommandName());
+				clusterCommand.getExecutedNodes().put(nodeId, true);
+				Map<String, Boolean> temp = new HashMap<String, Boolean>();
+				iterator = clusterCommand.getExecutedNodes().entrySet().iterator();
+				while (iterator.hasNext()) {
+					Map.Entry<String, Boolean> tempEntry = iterator.next();
+
+					if (tempEntry.getValue() != true) {
+						temp.put(tempEntry.getKey(), tempEntry.getValue());
+					}
+				}
+				if (temp.size() > 0) {
+					iterator = temp.entrySet().iterator();
+					String nextNodeId = iterator.next().getKey();
+					clusterCommand.setPreviousNode(clusterCommand.getNextNode());
+					clusterCommand.setPreviousNodeUp(false);
+					clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
+				} else if (temp.size() == 0) {
+					clusterCommand.getExecutedNodes().clear();
+					cluster.getCommands().clear();
+				}
+
+			} else if (clusterCommand.getPreviousNode().getNodeId()
+			                         .equals(currentNode.getNodeId())) {
 				clusterCommand.setPreviousNodeUp(true);
 			}
-
 
 		}
 	}
