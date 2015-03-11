@@ -57,6 +57,7 @@ public class OCInternalService implements OCInternal {
 	private String registerCluster(OCAgentMessage ocAgentMessage) {
 
 		Cluster tempCluster = DataHolder.getClusters().get(ocAgentMessage.getDomain());
+
 		if (tempCluster == null) {
 			Cluster cluster = new Cluster();
 			cluster.setClusterId(ocAgentMessage.getDomain());
@@ -67,6 +68,7 @@ public class OCInternalService implements OCInternal {
 			DataHolder.addCluster(cluster);
 			tempCluster = cluster;
 		}
+
 		String serverIp = ocAgentMessage.getAdminServiceUrl().substring(8, 20);
 		String serverPort = ocAgentMessage.getAdminServiceUrl().substring(21, 25);
 		//String temp[]=ocAgentMessage.getAdminServiceUrl().split("\\");
@@ -86,7 +88,6 @@ public class OCInternalService implements OCInternal {
 		node.setPatches(ocAgentMessage.getPatches());
 		DataHolder.addNode(tempCluster.getClusterId(), node);
 		return serverId;
-
 	}
 
 	private void executeCommandsOnNodes(String nodeId, Cluster cluster) {
@@ -100,6 +101,7 @@ public class OCInternalService implements OCInternal {
 				Map<String, Node> nodeList = cluster.getNodes();
 				for (Node temp : nodeList.values()) {
 					if (temp.getStatus().equals(ServerConstants.NODE_RUNNING)) {
+
 						clusterCommand.getExecutedNodes().put(temp.getNodeId(), false);
 					}
 				}
@@ -116,6 +118,7 @@ public class OCInternalService implements OCInternal {
 			} else if (clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) &&
 			           (clusterCommand.isPreviousNodeUp() ||
 			            clusterCommand.getPreviousNode() == null)) {
+
 				currentNode.getCommands().clear();
 				currentNode.addCommand(currentCommand.getCommandName());
 				clusterCommand.getExecutedNodes().put(nodeId, true);
@@ -134,6 +137,7 @@ public class OCInternalService implements OCInternal {
 					clusterCommand.setPreviousNode(clusterCommand.getNextNode());
 					clusterCommand.setPreviousNodeUp(false);
 					clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
+
 				} else if (temp.size() == 0) {
 					clusterCommand.getExecutedNodes().clear();
 					cluster.getCommands().clear();
@@ -141,6 +145,7 @@ public class OCInternalService implements OCInternal {
 
 			} else if (clusterCommand.getPreviousNode().getNodeId()
 			                         .equals(currentNode.getNodeId())) {
+
 				clusterCommand.setPreviousNodeUp(true);
 			}
 
