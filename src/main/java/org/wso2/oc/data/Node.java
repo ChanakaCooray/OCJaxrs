@@ -194,6 +194,7 @@ public class Node {
 
 		commands.add(new Command(commandId));
 	}
+
     public void updateNodeStatus(){
         Date currentTime = new Date();
 
@@ -217,4 +218,5 @@ public class Node {
             this.setStatus(ServerConstants.NODE_RUNNING);
         }
     }
+
 }

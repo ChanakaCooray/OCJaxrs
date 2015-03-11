@@ -10,15 +10,11 @@ public class DataHolder {
 	public static Map<String, Cluster> getClusters() {
 		return clusters;
 	}
-	public static void addNodeCommand(String clusterId,String serverId,Command command){
 
-	}
-	public static void addClusterCommand(String clusterId,Command command){
-
-	}
 	public static void addCluster(Cluster cluster){
 		clusters.put(cluster.getClusterId(),cluster);
 	}
+
 	public static void addNode(String clusterId,Node node){
        clusters.get(clusterId).addNewNode(node.getNodeId(),node);
 	}

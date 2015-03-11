@@ -39,6 +39,7 @@ public class Cluster {
 
         return numberOfActiveNodes;
     }
+
     public void updateClusterStatus(){
 
         Node[] nodes = this.getNodes().values().toArray(new Node[this.getNodes().size()]);
