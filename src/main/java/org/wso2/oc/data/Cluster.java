@@ -39,6 +39,25 @@ public class Cluster {
 
         return numberOfActiveNodes;
     }
+    public void updateClusterStatus(){
+
+        Node[] nodes = this.getNodes().values().toArray(new Node[this.getNodes().size()]);
+
+        boolean allNodesDown = false;
+
+        for(Node node:nodes){
+            node.updateNodeStatus();
+
+            if(node.getStatus().equals(ServerConstants.NODE_DOWN))
+                allNodesDown = true;
+        }
+
+        if(allNodesDown){
+            this.setStatus(ServerConstants.CLUSTER_DOWN);
+        }
+        else
+            this.setStatus(ServerConstants.CLUSTER_RUNNING);
+    }
 
     public Map<String,Node> getNodes() {
         return this.nodes;
