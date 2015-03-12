@@ -87,12 +87,12 @@ public class OCInternalService implements OCInternal {
 		return serverId;
 
 	}
-	private void executeCommandsOnNodes(String nodeId,Cluster cluster){
+
+	private synchronized void executeCommandsOnNodes(String nodeId,Cluster cluster){
 		Iterator<Map.Entry<String,Boolean>> iterator;
 		if(cluster.getCommands().size()>0){
 			Command currentCommand=cluster.getCommands().get(0);
-			OCExternalService externalService=new OCExternalService();
-			externalService.updateClusterStatus(cluster);
+			cluster.updateClusterStatus();
 
 			Node currentNode=cluster.getNodes().get(nodeId);
 
@@ -112,7 +112,7 @@ public class OCInternalService implements OCInternal {
 				}else{
 					cluster.getCommands().clear();
 				}
-			} else if(clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
+			} else if(clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) && (clusterCommand.getIsPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
 				currentNode.getCommands().clear();
 				currentNode.addCommand(currentCommand.getCommandName());
 				clusterCommand.getExecutedNodes().put(nodeId, true);
@@ -139,8 +139,6 @@ public class OCInternalService implements OCInternal {
 			}else if(clusterCommand.getPreviousNode().getNodeId().equals(currentNode.getNodeId())){
 				clusterCommand.setPreviousNodeUp(true);
 			}
-
-
 		}
 	}
 

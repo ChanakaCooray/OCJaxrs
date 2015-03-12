@@ -25,6 +25,26 @@ public class Cluster {
         commands=new ArrayList<ClusterCommand>();
     }
 
+	public void updateClusterStatus(){
+
+		Node[] nodes = getNodes().values().toArray(new Node[getNodes().size()]);
+
+		boolean allNodesDown = false;
+
+		for(Node node:nodes){
+			node.updateNodeStatus();
+
+			if(node.getStatus().equals(ServerConstants.NODE_DOWN))
+				allNodesDown = true;
+		}
+
+		if(allNodesDown){
+			setStatus(ServerConstants.CLUSTER_DOWN);
+		}
+		else
+			setStatus(ServerConstants.CLUSTER_RUNNING);
+	}
+
     public int getNumberOfNodes(){
         return nodes.size();
     }

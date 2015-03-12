@@ -1,6 +1,9 @@
 package org.wso2.oc.data;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Node {
@@ -190,5 +193,29 @@ public class Node {
 			commands = new ArrayList<Command>();
 
 		commands.add(new Command(commandId));
+	}
+
+	public void updateNodeStatus(){
+		Date currentTime = new Date();
+
+		SimpleDateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+
+		Date lastServerUpTime = null;
+
+		try {
+			lastServerUpTime = dateFormat.parse(getTimestamp());
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+
+		long diff = currentTime.getTime() - lastServerUpTime.getTime();
+
+		if(diff>ServerConstants.NODE_DOWN_TIME_INTERVAL){
+			setStatus(ServerConstants.NODE_DOWN);
+		}else if(diff>ServerConstants.NODE_NOT_REPORTING_TIME_INTERVAL){
+			setStatus(ServerConstants.NODE_NOT_REPORTING);
+		}else{
+			setStatus(ServerConstants.NODE_RUNNING);
+		}
 	}
 }

@@ -6,10 +6,14 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ClusterCommand extends Command{
+	@JsonIgnore
     private  Map<String,Boolean> executedNodes=new HashMap<String,Boolean>();
-    private  Node nextNode;
-    private  Node previousNode;
-    private  boolean isPreviousNodeUp;
+    @JsonIgnore
+	private  Node nextNode;
+    @JsonIgnore
+	private  Node previousNode;
+    @JsonIgnore
+	private  boolean isPreviousNodeUp;
 
     public ClusterCommand(String commandName) {
         super(commandName);
@@ -42,7 +46,7 @@ public class ClusterCommand extends Command{
         this.previousNode = previousNode;
     }
 
-    public boolean isPreviousNodeUp() {
+    public boolean getIsPreviousNodeUp() {
         return isPreviousNodeUp;
     }
 
