@@ -104,11 +104,14 @@ public class OCInternalService implements OCInternal {
 						clusterCommand.getExecutedNodes().put(temp.getNodeId(), false);
 					}
 				}
-				iterator=clusterCommand.getExecutedNodes().entrySet().iterator();
-				String nextNodeId=iterator.next().getKey();
-				clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
-				clusterCommand.setPreviousNode(null);
-
+				if(clusterCommand.getExecutedNodes().size()==0){
+					iterator=clusterCommand.getExecutedNodes().entrySet().iterator();
+					String nextNodeId=iterator.next().getKey();
+					clusterCommand.setNextNode(cluster.getNodes().get(nextNodeId));
+					clusterCommand.setPreviousNode(null);
+				}else{
+					cluster.getCommands().remove(currentCommand);
+				}
 			} else if(clusterCommand.getNextNode().getNodeId().equals(currentNode.getNodeId()) && (clusterCommand.isPreviousNodeUp() ||clusterCommand.getPreviousNode()==null)){
 				currentNode.getCommands().clear();
 				currentNode.addCommand(currentCommand.getCommandName());
