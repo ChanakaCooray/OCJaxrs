@@ -19,7 +19,7 @@ public class OCInternalService implements OCInternal {
 		return Response.status(201).entity(response).build();
 	}
 
-	public Response synchronizeServer(String serverId, OCAgentMessage ocAgentMessage) {
+	public synchronized Response synchronizeServer(String serverId, OCAgentMessage ocAgentMessage) {
 		String[] response = updateCluster(serverId, ocAgentMessage);
 		return Response.status(200).entity(response).build();
 	}
