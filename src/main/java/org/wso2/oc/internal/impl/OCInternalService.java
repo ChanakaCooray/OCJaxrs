@@ -118,8 +118,6 @@ public class OCInternalService implements OCInternal {
 
 				}
 			}
-
-
 		}
 	}
 	private void initializeNodeList(Cluster cluster,ClusterCommand clusterCommand){
@@ -150,7 +148,6 @@ public class OCInternalService implements OCInternal {
 		iterator = clusterCommand.getExecutedNodes().entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<String, Boolean> tempEntry = iterator.next();
-
 			if (tempEntry.getValue() != true) {
 				temp.put(tempEntry.getKey(), tempEntry.getValue());
 			}
