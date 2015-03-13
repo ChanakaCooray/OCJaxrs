@@ -28,11 +28,22 @@ public class Node {
     private double systemLoadAverage;
     private String status;
     private List<Command> commands;
+
+	private boolean synchronizedReceived;
+
     public Node(){
         commands=new ArrayList<Command>();
     }
 
-    public String getNodeId() {
+	public void setSynchronizedReceived(boolean synchronizedReceived) {
+		this.synchronizedReceived = synchronizedReceived;
+	}
+
+	public boolean isSynchronizedReceived() {
+		return synchronizedReceived;
+	}
+
+	public String getNodeId() {
         return nodeId;
     }
 
