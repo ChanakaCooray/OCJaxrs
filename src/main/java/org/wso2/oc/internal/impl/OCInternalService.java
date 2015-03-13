@@ -88,12 +88,11 @@ public class OCInternalService implements OCInternal {
 		return serverId;
 	}
 
-	private void executeClusterCommand(String nodeId, Cluster cluster) {
-		Iterator<Map.Entry<String, Boolean>> iterator;
+	private synchronized void executeClusterCommand(String nodeId, Cluster cluster) {
 		if (cluster.getCommands().size() > 0) {
 			cluster.updateClusterStatus();
 			ClusterCommand clusterCommand = cluster.getCommands().get(0);
-			if(clusterCommand.equals(ServerConstants.GRACEFUL_RESTART) || clusterCommand.equals(ServerConstants.FORCE_RESTART)){
+			if(clusterCommand.getCommandName().equals(ServerConstants.GRACEFUL_RESTART) || clusterCommand.getCommandName().equals(ServerConstants.FORCE_RESTART)){
 				if (clusterCommand.getExecutedNodes().size() == 0) {
 					initializeNodeList(cluster, clusterCommand);
 
@@ -108,7 +107,7 @@ public class OCInternalService implements OCInternal {
 
 					clusterCommand.setPreviousNodeUp(true);
 				}
-			}else if(clusterCommand.equals(ServerConstants.GRACEFUL_SHUTDOWN) || clusterCommand.equals(ServerConstants.FORCE_SHUTDOWN) ){
+			}else if(clusterCommand.getCommandName().equals(ServerConstants.GRACEFUL_SHUTDOWN) || clusterCommand.getCommandName().equals(ServerConstants.FORCE_SHUTDOWN) ){
 				if (clusterCommand.getExecutedNodes().size() == 0) {
 					initializeNodeList(cluster, clusterCommand);
 
@@ -118,11 +117,9 @@ public class OCInternalService implements OCInternal {
 
 				}
 			}
-
-
 		}
 	}
-	private void initializeNodeList(Cluster cluster,ClusterCommand clusterCommand){
+	private synchronized void initializeNodeList(Cluster cluster,ClusterCommand clusterCommand){
 		Map<String, Node> nodeList = cluster.getNodes();
 		for (Node temp : nodeList.values()) {
 			if (temp.getStatus().equals(ServerConstants.NODE_RUNNING)) {
@@ -140,7 +137,7 @@ public class OCInternalService implements OCInternal {
 			cluster.getCommands().clear();
 		}
 	}
-	private void executeCommandOnNodes(Cluster cluster,ClusterCommand clusterCommand,String nodeId){
+	private synchronized void executeCommandOnNodes(Cluster cluster,ClusterCommand clusterCommand,String nodeId){
 		Iterator<Map.Entry<String, Boolean>> iterator;
 		Node currentNode = cluster.getNodes().get(nodeId);
 		currentNode.getCommands().clear();
@@ -150,7 +147,6 @@ public class OCInternalService implements OCInternal {
 		iterator = clusterCommand.getExecutedNodes().entrySet().iterator();
 		while (iterator.hasNext()) {
 			Map.Entry<String, Boolean> tempEntry = iterator.next();
-
 			if (tempEntry.getValue() != true) {
 				temp.put(tempEntry.getKey(), tempEntry.getValue());
 			}
@@ -158,7 +154,7 @@ public class OCInternalService implements OCInternal {
 		if (temp.size() > 0) {
 		 iterator = temp.entrySet().iterator();
 			String nextNodeId = iterator.next().getKey();
-			if(clusterCommand.equals(ServerConstants.FORCE_RESTART) || clusterCommand.equals(ServerConstants.GRACEFUL_RESTART)){
+			if(clusterCommand.getCommandName().equals(ServerConstants.FORCE_RESTART) || clusterCommand.getCommandName().equals(ServerConstants.GRACEFUL_RESTART)){
 				clusterCommand.setPreviousNode(clusterCommand.getNextNode());
 				clusterCommand.setPreviousNodeUp(false);
 			}
