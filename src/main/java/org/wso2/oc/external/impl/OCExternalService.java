@@ -1,5 +1,7 @@
 package org.wso2.oc.external.impl;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.wso2.oc.data.*;
 import org.wso2.oc.external.OCExternal;
 
@@ -9,7 +11,11 @@ import java.util.Map;
 
 public class OCExternalService implements OCExternal {
 
+	private static final Log log = LogFactory.getLog(OCExternalService.class);
+
 	public Map<String, Cluster> getAllClustersData() {
+
+		log.debug("Requesting all clusters data.");
 
 		Map<String,Cluster> clusters = DataHolder.getClusters();
 
@@ -21,6 +27,8 @@ public class OCExternalService implements OCExternal {
 	}
 
 	public Cluster getClusterData(String clusterId) {
+
+		log.debug("Requesting the data in cluster: "+clusterId);
 
 		Map<String,Cluster> clusters = DataHolder.getClusters();
 
@@ -37,6 +45,8 @@ public class OCExternalService implements OCExternal {
 	}
 
 	public Map<String, Node> getAllClusterNodesData(String clusterId) {
+
+		log.debug("Requesting all nodes data in cluster: "+clusterId);
 
 		Map<String,Cluster> clusters = DataHolder.getClusters();
 
@@ -55,6 +65,8 @@ public class OCExternalService implements OCExternal {
 	}
 
 	public Node getClusterNodeData(String clusterId, String nodeId) {
+
+		log.debug("Requesting the data of the node: "+nodeId+" in the cluster: "+clusterId);
 
 		Map<String,Cluster> clusters = DataHolder.getClusters();
 
@@ -79,9 +91,12 @@ public class OCExternalService implements OCExternal {
 
 	public Response executeClusterCommand(String clusterId, String commandId) {
 
+		log.info("Executing the cluster command: "+commandId+" in the cluster: "+clusterId);
+
 		Map<String,Cluster> clusters = DataHolder.getClusters();
 
 		if(!clusters.containsKey(clusterId)){
+			log.error("Requested cluster is not found.");
 			throw new WebApplicationException(new Throwable("Cluster is not found"),
 			                                  Response.Status.BAD_REQUEST);
 		}
@@ -93,9 +108,12 @@ public class OCExternalService implements OCExternal {
 
 	public Response executeNodeCommand(String clusterId, String nodeId, String commandId) {
 
+		log.info("Executing the node command: "+commandId+" in the node: "+nodeId+", cluster: "+clusterId);
+
 		Map<String,Cluster> clusters = DataHolder.getClusters();
 
 		if(!clusters.containsKey(clusterId)){
+			log.error("Requested cluster is not found.");
 			throw new WebApplicationException(new Throwable("Cluster is not found"),
 			                                  Response.Status.BAD_REQUEST);
 		}
@@ -103,6 +121,7 @@ public class OCExternalService implements OCExternal {
 		Map<String, Node> nodes = clusters.get(clusterId).getNodes();
 
 		if(!nodes.containsKey(nodeId)){
+			log.error("Requested node is not found.");
 			throw new WebApplicationException(new Throwable("Node is not found"),
 			                                  Response.Status.BAD_REQUEST);
 		}
