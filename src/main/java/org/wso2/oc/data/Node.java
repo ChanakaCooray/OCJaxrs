@@ -33,8 +33,13 @@ public class Node {
     private double systemLoadAverage;
     private String status;
     private List<Command> commands;
+    private boolean synchronizationReceived;
+    private boolean registrationReceived;
+
     public Node(){
         commands=new ArrayList<Command>();
+        registrationReceived=false;
+        synchronizationReceived=false;
     }
 
     public String getNodeId() {
@@ -224,4 +229,19 @@ public class Node {
         }
     }
 
+    public boolean isSynchronizationReceived() {
+        return synchronizationReceived;
+    }
+
+    public void setSynchronizationReceived(boolean synchronizationReceived) {
+        this.synchronizationReceived = synchronizationReceived;
+    }
+
+    public boolean isRegistrationReceived() {
+        return registrationReceived;
+    }
+
+    public void setRegistrationReceived(boolean registrationReceived) {
+        this.registrationReceived = registrationReceived;
+    }
 }
