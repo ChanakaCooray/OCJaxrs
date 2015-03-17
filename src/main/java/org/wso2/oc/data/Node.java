@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Node {
 
-	private static final Log log = LogFactory.getLog(Node.class);
+	private static final Log log= LogFactory.getLog(Node.class);
 
     private String nodeId;
     private String ip;
@@ -35,25 +35,21 @@ public class Node {
     private List<Command> commands;
     private boolean synchronizationReceived;
     private boolean registrationReceived;
-
 	private boolean isLogEnabled;
-	private String consoleLog;
-
+	private String carbonLog;
     public Node(){
         commands=new ArrayList<Command>();
         registrationReceived=false;
         synchronizationReceived=false;
     }
+    public String getCarbonLog() {
+        return carbonLog;
+    }
+    public void setCarbonLog(String carbonLog) {
+        this.carbonLog = carbonLog;
+    }
 
-	public String getConsoleLog() {
-		return consoleLog;
-	}
-
-	public void setConsoleLog(String consoleLog) {
-		this.consoleLog = consoleLog;
-	}
-
-	public void setLogEnabled(boolean isLogEnabled) {
+    public void setLogEnabled(boolean isLogEnabled) {
 		this.isLogEnabled = isLogEnabled;
 	}
 

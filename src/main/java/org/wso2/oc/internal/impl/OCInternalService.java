@@ -17,7 +17,17 @@ public class OCInternalService implements OCInternal {
 	}
 
 	public Response synchronizeServer(String serverId, OCAgentMessage ocAgentMessage) {
-		String[] response = updateCluster(serverId, ocAgentMessage);
+		String[] commands = updateCluster(serverId, ocAgentMessage);
+		Map<String,Object> response = new HashMap<String,Object>();
+		response.put("ServerCommands",commands);
+		Cluster cluster = DataHolder.getClusters().get(ocAgentMessage.getDomain());
+		Node node = cluster.getNodes().get(serverId);
+		if(node.isLogEnabled()){
+			response.put("LogEnabled",new String("true"));
+			node.setLogEnabled(false);
+		}else{
+			response.put("LogEnabled",new String("false"));
+		}
 		return Response.status(Response.Status.OK).entity(response).build();
 	}
 
@@ -39,6 +49,7 @@ public class OCInternalService implements OCInternal {
 			node.setSystemLoadAverage(ocAgentMessage.getSystemLoadAverage());
 			node.setTimestamp(ocAgentMessage.getTimestamp());
 			node.setSynchronizationReceived(true);
+			node.setCarbonLog(ocAgentMessage.getCarbonLog());
 			cluster.setTenants(ocAgentMessage.getTenants());
 			DataHolder.addNode(cluster.getClusterId(), node);
 			executeClusterCommand(nodeId, cluster);
