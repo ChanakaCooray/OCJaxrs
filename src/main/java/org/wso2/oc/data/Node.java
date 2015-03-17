@@ -36,13 +36,32 @@ public class Node {
     private boolean synchronizationReceived;
     private boolean registrationReceived;
 
+	private boolean isLogEnabled;
+	private String consoleLog;
+
     public Node(){
         commands=new ArrayList<Command>();
         registrationReceived=false;
         synchronizationReceived=false;
     }
 
-    public String getNodeId() {
+	public String getConsoleLog() {
+		return consoleLog;
+	}
+
+	public void setConsoleLog(String consoleLog) {
+		this.consoleLog = consoleLog;
+	}
+
+	public void setLogEnabled(boolean isLogEnabled) {
+		this.isLogEnabled = isLogEnabled;
+	}
+
+	public boolean isLogEnabled() {
+		return isLogEnabled;
+	}
+
+	public String getNodeId() {
         return nodeId;
     }
 

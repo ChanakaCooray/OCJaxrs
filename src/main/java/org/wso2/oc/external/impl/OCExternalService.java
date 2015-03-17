@@ -131,4 +131,32 @@ public class OCExternalService implements OCExternal {
 		return Response.ok().build();
 	}
 
+	public String requestLog(String clusterId, String nodeId) {
+
+		log.debug("Requesting log of the node: "+nodeId+" in the cluster: "+clusterId);
+
+		Map<String,Cluster> clusters = DataHolder.getClusters();
+
+		if(!clusters.containsKey(clusterId)){
+			throw new WebApplicationException(new Throwable("Cluster is not found"),
+			                                  Response.Status.BAD_REQUEST);
+		}
+
+		Map<String, Node> nodes = clusters.get(clusterId).getNodes();
+
+		if(!nodes.containsKey(nodeId)){
+			throw new WebApplicationException(new Throwable("Node is not found"),
+			                                  Response.Status.BAD_REQUEST);
+		}
+
+		Node node = nodes.get(nodeId);
+
+		if(node.isLogEnabled()){
+			return "";
+		}
+		else{
+			node.setLogEnabled(true);
+			return node.getConsoleLog();
+		}
+	}
 }

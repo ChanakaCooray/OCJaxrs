@@ -42,4 +42,8 @@ public interface OCExternal {
 	                                   @PathParam("node-Id") String nodeId,
 	                                   @PathParam("command-Id") String commandId);
 
+	@GET
+	@Path("/{cluster-Id}/nodes/{node-Id}/log")
+	public String requestLog(@PathParam("cluster-Id") String clusterId,
+	                         @PathParam("node-Id") String nodeId);
 }
