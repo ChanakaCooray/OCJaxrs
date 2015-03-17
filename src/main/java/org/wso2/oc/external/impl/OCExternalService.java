@@ -5,9 +5,6 @@ import org.wso2.oc.external.OCExternal;
 
 import javax.ws.rs.WebApplicationException;
 import javax.ws.rs.core.Response;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.Map;
 
 public class OCExternalService implements OCExternal {

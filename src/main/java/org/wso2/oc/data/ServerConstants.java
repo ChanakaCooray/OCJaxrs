@@ -15,7 +15,7 @@ public class ServerConstants {
 	public static final String CLUSTER_RUNNING = "RUNNING";
 
 	public static final int NODE_DOWN_TIME_INTERVAL = 60000;
-	public static final int NODE_NOT_REPORTING_TIME_INTERVAL = 20000;
+	public static final int NODE_NOT_REPORTING_TIME_INTERVAL = 11000;
 
 	private ServerConstants() {
 	}

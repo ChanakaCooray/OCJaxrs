@@ -212,4 +212,32 @@ public class OCAgentMessage {
 		this.status = status;
 	}
 
+	@Override
+	public String toString() {
+		return "OCAgentMessage{" +
+		       "serverId='" + serverId + '\'' +
+		       ", ip='" + ip + '\'' +
+		       ", serverName='" + serverName + '\'' +
+		       ", serverVersion='" + serverVersion + '\'' +
+		       ", domain='" + domain + '\'' +
+		       ", subDomain='" + subDomain + '\'' +
+		       ", adminServiceUrl='" + adminServiceUrl + '\'' +
+		       ", startTime='" + startTime + '\'' +
+		       ", os='" + os + '\'' +
+		       ", totalMemory=" + totalMemory +
+		       ", cpuCount=" + cpuCount +
+		       ", cpuSpeed=" + cpuSpeed +
+		       ", timestamp='" + timestamp + '\'' +
+		       ", patches=" + patches +
+		       ", freeMemory=" + freeMemory +
+		       ", idleCpuUsage=" + idleCpuUsage +
+		       ", systemCpuUsage=" + systemCpuUsage +
+		       ", userCpuUsage=" + userCpuUsage +
+		       ", serverUpTime='" + serverUpTime + '\'' +
+		       ", threadCount=" + threadCount +
+		       ", systemLoadAverage=" + systemLoadAverage +
+		       ", tenants=" + tenants +
+		       ", status='" + status + '\'' +
+		       '}';
+	}
 }
