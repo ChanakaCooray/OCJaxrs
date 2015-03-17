@@ -17,6 +17,6 @@ public class DataHolder {
 	public static void addNode(String clusterId,Node node){
 		clusters.get(clusterId).addNewNode(node.getNodeId(),node);
 	}
-
-	private DataHolder(){}
+	private DataHolder(){
+	}
 }

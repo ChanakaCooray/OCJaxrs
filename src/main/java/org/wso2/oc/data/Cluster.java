@@ -18,8 +18,6 @@ public class Cluster {
     private List<Tenant> tenants;
     private String status;
     private List<ClusterCommand> commands;
-    private static final Log log= LogFactory.getLog(Cluster.class);
-
     public Cluster(){
         nodes=new HashMap<String,Node>();
         commands=new ArrayList<ClusterCommand>();

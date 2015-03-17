@@ -11,7 +11,7 @@ import java.util.List;
 
 public class Node {
 
-	private static final Log log = LogFactory.getLog(Node.class);
+	private static final Log log= LogFactory.getLog(Node.class);
 
     private String nodeId;
     private String ip;
@@ -35,7 +35,6 @@ public class Node {
     private List<Command> commands;
     private boolean synchronizationReceived;
     private boolean registrationReceived;
-
     public Node(){
         commands=new ArrayList<Command>();
         registrationReceived=false;
