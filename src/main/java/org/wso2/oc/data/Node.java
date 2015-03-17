@@ -35,13 +35,29 @@ public class Node {
     private List<Command> commands;
     private boolean synchronizationReceived;
     private boolean registrationReceived;
+	private boolean isLogEnabled;
+	private String carbonLog;
     public Node(){
         commands=new ArrayList<Command>();
         registrationReceived=false;
         synchronizationReceived=false;
     }
+    public String getCarbonLog() {
+        return carbonLog;
+    }
+    public void setCarbonLog(String carbonLog) {
+        this.carbonLog = carbonLog;
+    }
 
-    public String getNodeId() {
+    public void setLogEnabled(boolean isLogEnabled) {
+		this.isLogEnabled = isLogEnabled;
+	}
+
+	public boolean isLogEnabled() {
+		return isLogEnabled;
+	}
+
+	public String getNodeId() {
         return nodeId;
     }
 

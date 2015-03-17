@@ -27,6 +27,15 @@ public class OCAgentMessage {
 	private double systemLoadAverage;
 	private List<Tenant> tenants;
 	private String status;
+	private String carbonLog;
+
+	public String getCarbonLog() {
+		return carbonLog;
+	}
+
+	public void setCarbonLog(String carbonLog) {
+		this.carbonLog = carbonLog;
+	}
 
 	public String getServerId() {
 		return serverId;
