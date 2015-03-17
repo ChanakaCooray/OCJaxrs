@@ -1,5 +1,8 @@
 package org.wso2.oc.data;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -8,22 +11,24 @@ import java.util.List;
 
 public class Node {
 
+	private static final Log log = LogFactory.getLog(Node.class);
+
     private String nodeId;
     private String ip;
     private String subDomain;
     private String adminServiceUrl;
     private String startTime;
     private String os;
-    private double totalMemory;
-    private int cpuCount;
-    private double cpuSpeed;
-    private String timestamp;
-    private List<String> patches;
-    private double freeMemory;
-    private double idleCpuUsage;
     private double systemCpuUsage;
     private double userCpuUsage;
     private String serverUpTime;
+	private double totalMemory;
+	private int cpuCount;
+	private double cpuSpeed;
+	private String timestamp;
+	private List<String> patches;
+	private double freeMemory;
+	private double idleCpuUsage;
     private int threadCount;
     private double systemLoadAverage;
     private String status;
@@ -189,9 +194,9 @@ public class Node {
     }
 
 	public void addCommand(String commandId){
-		if(commands == null)
+		if(commands == null) {
 			commands = new ArrayList<Command>();
-
+		}
 		commands.add(new Command(commandId));
 	}
 
@@ -205,7 +210,7 @@ public class Node {
         try {
             lastServerUpTime = dateFormat.parse(this.getTimestamp());
         } catch (ParseException e) {
-            e.printStackTrace();
+            log.error("Error in parsing timestamp", e);
         }
 
         long diff = currentTime.getTime() - lastServerUpTime.getTime();

@@ -33,8 +33,9 @@ public class Cluster {
         int numberOfActiveNodes=0;
 
 	    for(Node n:nodes.values()){
-		    if(n.getStatus()==ServerConstants.NODE_RUNNING)
+		    if(n.getStatus()==ServerConstants.NODE_RUNNING) {
 			    numberOfActiveNodes++;
+		    }
 	    }
 
         return numberOfActiveNodes;
@@ -42,22 +43,23 @@ public class Cluster {
 
     public void updateClusterStatus(){
 
-        Node[] nodes = this.getNodes().values().toArray(new Node[this.getNodes().size()]);
+        Node[] nodesArray = this.getNodes().values().toArray(new Node[this.getNodes().size()]);
 
-        boolean allNodesDown = false;
+        boolean allNodesDown = true;
 
-        for(Node node:nodes){
+        for(Node node:nodesArray){
             node.updateNodeStatus();
 
-            if(node.getStatus().equals(ServerConstants.NODE_DOWN))
-                allNodesDown = true;
+            if(node.getStatus().equals(ServerConstants.NODE_RUNNING)) {
+	            allNodesDown = false;
+            }
         }
 
         if(allNodesDown){
             this.setStatus(ServerConstants.CLUSTER_DOWN);
+        }else {
+	        this.setStatus(ServerConstants.CLUSTER_RUNNING);
         }
-        else
-            this.setStatus(ServerConstants.CLUSTER_RUNNING);
     }
 
     public Map<String,Node> getNodes() {
@@ -121,9 +123,9 @@ public class Cluster {
     }
 
 	public void addCommand(String commandId){
-		if(commands == null)
+		if(commands == null) {
 			commands = new ArrayList<ClusterCommand>();
-
+		}
 		commands.add(new ClusterCommand(commandId));
 	}
 }
