@@ -156,7 +156,7 @@ public class OCExternalService implements OCExternal {
 		}
 		else{
 			node.setLogEnabled(true);
-			return node.getConsoleLog();
+			return node.getCarbonLog();
 		}
 	}
 }

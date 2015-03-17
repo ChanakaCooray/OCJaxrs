@@ -25,6 +25,8 @@ public class OCInternalService implements OCInternal {
 		if(node.isLogEnabled()){
 			response.put("LogEnabled",new String("true"));
 			node.setLogEnabled(false);
+		}else{
+			response.put("LogEnabled",new String("false"));
 		}
 		return Response.status(Response.Status.OK).entity(response).build();
 	}
